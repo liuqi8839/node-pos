@@ -1,8 +1,13 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+.text_center{
+    text-align:center;
 }
 
-a {
-  color: #00B7FF;
+.text_left{
+    text-align:left;
+
+}
+
+.input-grounp_width{
+    width: 100px;
 }
