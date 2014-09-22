@@ -1,0 +1,4 @@
+
+$(function(){
+    $('#home').addClass('active');
+});

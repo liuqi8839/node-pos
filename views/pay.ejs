@@ -1,0 +1,71 @@
+<%- include header%>
+
+<script src="/viewStage/pay.js"></script>
+
+<div class="container theme-showcase" role="main">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="panel panel-default col-sm-12 theme-showcase" role="main" >
+        <div class="panel-heading">
+            <h3 class="panel-title text_left">购物清单</h3>
+        </div>
+        <div class="panel-body">
+            <p id="now_time"></p>
+            <table class="table table-bordered text_center">
+                <thead>
+                <tr>
+                    <th class="text_center">
+                        分类
+                    </th>
+                    <th class="text_center">
+                        名称
+                    </th>
+                    <th class="text_center">
+                        单价（元）
+                    </th>
+                    <th class="text_center">
+                        单位
+                    </th>
+                    <th class="text_center">
+                        数量
+                    </th>
+                    <th class="text_center">
+                        小计
+                    </th>
+                </tr>
+                </thead>
+                <tbody  id="show_goods">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-heading">
+            <h3 class="panel-title text_left">赠送商品</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered text_center">
+                <thead>
+                <tr>
+                    <th class="text_center">
+                        分类
+                    </th>
+                    <th class="text_center">
+                        名称
+                    </th>
+                    <th class="text_center">
+                        数量
+                    </th>
+                </tr>
+                </thead>
+                <tbody  id="show_preferential">
+
+                </tbody>
+            </table>
+        </div>
+        <p align="right">总计：<span  id="total">0.00</span>元</p>
+        <p align="right">节省：<span id="preferential">0.00</span>元</p>
+        <p align="right"><a href="/" class="btn btn-primary btn-lg sure" role="button">确认</a></p>
+    </div>
+</div>
+
+<%- include footer%>
+

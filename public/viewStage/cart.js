@@ -1,0 +1,4 @@
+
+$(function(){
+    $('#cart').addClass('active');
+});
