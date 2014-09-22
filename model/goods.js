@@ -1,5 +1,5 @@
 
-var mongodb = require('../model/db');
+var mongodb = require('./db');
 
 function Goods(good){
     this.kind = good.kind;

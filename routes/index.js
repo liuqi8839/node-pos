@@ -40,4 +40,23 @@ module.exports = function(app) {
     app.post('/pay', function (req, res) {
     });
 
+    app.post('/addGood',function(req,res){
+        var good = req.body.good;
+        var cart = req.session.cart;
+        var hadGood = _.findWhere(cart,{name:good.name});
+        if(hadGood){
+            good.num = hadShop.num + 1;
+            var index = _.indexOf(cart,hadGood);
+            cart[index] = good;
+        }else{
+            good.num = 1;
+            cart.push(good);
+        }
+        req.session.cart = cart;
+        var total = req.session.total + 1;
+        req.session.total = total;
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.write(total + "");
+        res.end();
+    });
 };
