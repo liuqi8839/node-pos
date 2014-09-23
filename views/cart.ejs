@@ -31,10 +31,29 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                <% var count = 0,subtotal = 0;goods.forEach(function(good,index){%>
+                <tr>
+                    <td><%= good.kind %></td>
+                    <td><%= good.name %></td>
+                    <td><%= good.price %></td>
+                    <td><%= good.unit %></td>
+                    <td>
+                        <div class="btn-group">
+                            <a type="button" class="btn btn-primary" href="/subCart?goodName=<%= good.name%>">-</a>
+                            <button class="btn btn-default"><%= good.num %></button>
+                            <a type="button" class="btn btn-primary" href="/addCart?goodName=<%= good.name%>">+</a>
+                        </div>
+                    </td>
+                    <% if(good.twosendone == "true" && good.num > 2){ %>
+                    <td><%= subtotal = (good.num%3 +parseInt(good.num/3)*2) * good.price %>元(原价：<%= good.num * good.price%>元)</td>
+                    <% }else{%>
+                    <td><%= subtotal = good.num * good.price%>元</td>
+                    <% } %>
+                </tr>
+                <% count += subtotal; }) %>
                 </tbody>
             </table>
-            <p align="right">总计：<span id="total">0</span>元</p>
+            <p align="right">总计：<%= count %>元</p>
             <p align="right"><a href="/pay" class="btn btn-primary btn-lg" role="button">付款</a></p>
         </div>
     </div>
