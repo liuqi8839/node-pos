@@ -28,37 +28,27 @@ module.exports = function(app) {
         });
     });
     app.get('/cart', function (req, res) {
-        var goods = req.session.cart;
-        var gives = [];
-        _.each(goods,function(good){
-            if(good.twosendone == "true" && good.num > 2){
-                var give = _.clone(good);
-                give.num = parseInt(give.num/3);
-                gives.push(give);
-            }
-        });
         res.render('cart',{
             title:"购物清单",
             total:req.session.total,
-            goods:goods,
-            gives:gives
+            goods:req.session.cart
         });
     });
     app.get('/pay', function (req, res) {
         var goods = req.session.cart;
-        var gives = [];
+        var promotions = [];
         _.each(goods,function(good){
             if(good.twosendone == "true" && good.num > 2){
-                var give = _.clone(good);
-                give.num = parseInt(give.num/3);
-                gives.push(give);
+                var promotion = _.clone(good);
+                promotion.num = parseInt(promotion.num/3);
+                promotions.push(promotion);
             }
         });
         res.render('pay',{
             title:"付款",
             total:req.session.total,
             goods:goods,
-            gives:gives
+            promotions:promotions
         });
     });
     app.post('/pay', function (req, res) {
