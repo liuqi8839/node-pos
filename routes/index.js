@@ -6,6 +6,7 @@ var Goods = require('../model/goods.js');
 var _ = require('../public/underscore');
 
 module.exports = function(app) {
+
     app.get('/', function (req, res) {
         if(!req.session.cart){
             req.session.cart = [];
@@ -17,8 +18,12 @@ module.exports = function(app) {
             req.session.total = 0;
             req.session.cart = [];
         }
-        res.render('index',{title:"主页",total:req.session.total});
+        res.render('index',{
+            title:"主页",
+            total:req.session.total
+        });
     });
+
     app.get('/item_list', function (req, res) {
         Goods.get(function(err,goods){
             if(err){
@@ -31,6 +36,7 @@ module.exports = function(app) {
             });
         });
     });
+
     app.get('/cart', function (req, res) {
         res.render('cart',{
             title:"购物清单",
@@ -38,6 +44,7 @@ module.exports = function(app) {
             goods:req.session.cart
         });
     });
+
     app.get('/pay', function (req, res) {
         var goods = req.session.cart;
         var promotions = [];
@@ -54,8 +61,6 @@ module.exports = function(app) {
             goods:goods,
             promotions:promotions
         });
-    });
-    app.post('/pay', function (req, res) {
     });
 
     app.post('/addGood', function(req,res){
@@ -78,6 +83,7 @@ module.exports = function(app) {
         res.write(total + "");
         res.end();
     });
+
     app.get('/subCart',function(req,res){
         var goods = req.session.cart;
         var good = _.findWhere(goods,{name:req.query.goodName});
@@ -97,6 +103,7 @@ module.exports = function(app) {
             res.redirect('/cart');
         }
     });
+
     app.get('/addCart',function(req,res){
         var goods = req.session.cart;
         var good = _.findWhere(goods,{name:req.query.goodName});
@@ -106,5 +113,11 @@ module.exports = function(app) {
         req.session.total = req.session.total + 1;
         req.session.cart = goods;
         res.redirect('/cart');
+    });
+
+    app.get('/admin',function(req,res){
+        res.render('backstageViews/goodsManage',{
+            title:"商品管理"
+        });
     });
 };
