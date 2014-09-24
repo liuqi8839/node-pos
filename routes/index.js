@@ -13,6 +13,10 @@ module.exports = function(app) {
         if(!req.session.total){
             req.session.total = 0;
         }
+        if(req.query.pay == "sure"){
+            req.session.total = 0;
+            req.session.cart = [];
+        }
         res.render('index',{title:"主页",total:req.session.total});
     });
     app.get('/item_list', function (req, res) {
