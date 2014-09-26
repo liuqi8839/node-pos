@@ -46,7 +46,7 @@ Goods.prototype.save = function(callback){
     });
 };
 
-Goods.get = function(name, callback) {
+Goods.getName = function(name, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -67,6 +67,32 @@ Goods.get = function(name, callback) {
                     return callback(err);//失败！返回 err 信息
                 }
                 callback(null, good);//成功！返回查询的商品信息
+            });
+        });
+    });
+};
+
+//读取商品及其相关信息
+Goods.getAll = function(callback){
+    //打开数据库
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        //读取goods集合
+        db.collection('goods',function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.find({}).sort({
+                time:-1
+            }).toArray(function(err,goods){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                callback(null,goods);
             });
         });
     });

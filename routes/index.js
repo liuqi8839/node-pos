@@ -25,7 +25,8 @@ module.exports = function(app) {
     });
 
     app.get('/item_list', function (req, res) {
-        Goods.get(function(err,goods){
+
+        Goods.getAll(function(err,goods){
             if(err){
                 goods = [];
             }
@@ -143,8 +144,12 @@ module.exports = function(app) {
             unit:req.body.unit,
             count:req.body.count
         });
+        if (newGood.kind == '' || newGood.name == '' || newGood.price == '' || newGood.unit == '' || newGood.count == '') {
+            req.flash('error', '信息都不能为空!');
+            return res.redirect('/addGoods');//返回添加商品页页
+        }
         //检查商品名称是否已经存在
-        Goods.get(newGood.name, function (err,good) {
+        Goods.getName(newGood.name, function (err,good) {
             if (good) {
                 req.flash('error', '商品已存在!');
                 return res.redirect('/addGoods');//返回添加商品页页
