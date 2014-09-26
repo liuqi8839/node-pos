@@ -6,6 +6,7 @@ function Goods(good){
     this.name = good.name;
     this.price = good.price;
     this.unit = good.unit;
+    this.count = good.count;
 }
 
 module.exports = Goods;
@@ -17,7 +18,8 @@ Goods.prototype.save = function(callback){
         kind:this.kind,
         name:this.name,
         price:this.price,
-        unit:this.unit
+        unit:this.unit,
+        count:this.count
     };
     //打开数据库
     mongodb.open(function(err,db){
@@ -44,26 +46,27 @@ Goods.prototype.save = function(callback){
     });
 };
 
-Goods.get = function(callback){
+Goods.get = function(name, callback) {
     //打开数据库
-    mongodb.open(function(err,db){
-        if(err){
-            return callback(err);
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);//错误，返回 err 信息
         }
-        //读取goods集合
-        db.collection('goods',function(err,collection){
-            if(err){
+        //读取  goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
                 mongodb.close();
-                return callback(err);
+                return callback(err);//错误，返回 err 信息
             }
-            collection.find({}).sort({
-                time:-1
-            }).toArray(function(err,goods){
+            //查找商品名称（name键）值为 name 一个文档
+            collection.findOne({
+                name: name
+            }, function (err, good) {
                 mongodb.close();
-                if(err){
-                    return callback(err);
+                if (err) {
+                    return callback(err);//失败！返回 err 信息
                 }
-                callback(null,goods);
+                callback(null, good);//成功！返回查询的商品信息
             });
         });
     });

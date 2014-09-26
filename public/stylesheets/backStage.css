@@ -53,45 +53,46 @@ header
 
 .content{
     border:1px solid #888;
+    padding: 10px;
     height:500px;
 }
 
 /*
-shopManage
+goodsManage
 */
-.shopManage p,.shopManage a{
+.goodsManage p,.goodsManage a{
     margin-bottom:20px;
 }
 
-.shopManage{
+.goodsManage{
     padding:10px 10px 0 10px;
 }
 
-.shopManage .table a{
+.goodsManage .table a{
     margin:0 10px 0 0;
 }
 
-.shopManage .table a:hover{
+.goodsManage .table a:hover{
     color:#00f;
 }
 
-.shopManage .shopNum{
+.goodsManage .shopNum{
     padding:0;
     width:34px;
     height:34px;
 }
 /*
-addShopAttr
+addAttribute
 */
-.addShopAttr{
+.addAttribute{
     padding:10px 10px 0 10px;
 }
 
-.addShopAttr .formAdd{
+.addAttribute .formAdd{
     padding-top:30px;
 }
 
-.addShopAttr .formAdd form label{
+.addAttribute .formAdd form label{
     text-align: left;
     width:auto;
 }
@@ -100,26 +101,35 @@ addShopAttr
     margin-left:60px;
 }
 
-.addShopAttr .nav a:hover{
+.addAttribute .nav a:hover{
     color:#000;
     text-decoration:none;
 }
 
 /*
-addShop
+addGoods
 */
-.addShop{
+.addGoods{
     padding:30px 20px 0 20px;
 }
-
-.addShop .shopForm .form-group{
+.addGoods input{
+    width: 146px;
+}
+.addGoods .reset{
+    width: 82px;
+}
+.addGoods .number{
+    width: 111px;
+}
+.addGoods .number input{
+    width: 46px;
+}
+.addGoods .goodForm .form-group{
     margin-bottom: 20px;
 }
-
-.addShop .shopForm label{
+.addGoods .goodForm label{
     width:auto;
 }
-
-.addShop .shopForm .btnBar{
+.addGoods .goodForm .btnBar{
     margin-bottom:30px;
 }

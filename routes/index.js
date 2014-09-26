@@ -120,4 +120,56 @@ module.exports = function(app) {
             title:"商品管理"
         });
     });
+
+    app.get('/goodsInfo',function(req,res){
+        res.render('backstageViews/goodsInfo',{
+            title:"商品详情"
+        });
+    });
+
+    app.get('/addGoods',function(req,res){
+        res.render('backstageViews/addGoods',{
+            title:" 添加商品",
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
+    });
+
+    app.post('/addGoods', function(req,res){
+        var newGood = new Goods({
+            kind:req.body.kind,
+            name:req.body.name,
+            price:req.body.price,
+            unit:req.body.unit,
+            count:req.body.count
+        });
+        //检查商品名称是否已经存在
+        Goods.get(newGood.name, function (err,good) {
+            if (good) {
+                req.flash('error', '商品已存在!');
+                return res.redirect('/addGoods');//返回添加商品页页
+            }
+            //如果不存在则新增商品
+            newGood.save(function (err) {
+                if (err) {
+                    req.flash('error', err);
+                    return res.redirect('/addGoods');//添加失败失败返回添加商品页
+                }
+                req.flash('success', '添加成功!');
+                res.redirect('/admin');//添加成功后返回商品管理页
+            });
+        });
+    });
+
+    app.get('/addAttribute',function(req,res){
+        res.render('backstageViews/addAttribute',{
+            title:" 添加属性"
+        });
+    });
+
+    app.get('/subAttribute',function(req,res){
+        res.render('backstageViews/subAttribute',{
+            title:" 删除属性"
+        });
+    });
 };

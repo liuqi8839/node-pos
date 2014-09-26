@@ -15,7 +15,7 @@ $('.addGood').click(function(){
         unit:temp[3],
         twosendone:temp[4]
     };
-    $.post('/addGood',{good:good},function(data){
+    $.post('/addGood',{good: good},function(data){
         $('#cart').find('#item-numbers').text(data);
     });
 });
