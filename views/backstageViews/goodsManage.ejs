@@ -1,5 +1,5 @@
 <%- include header %>
-<div>
+<div class="col-xs-12 col-md-12 addGoods">
     <p>商品信息管理</p>
     <p></p>
     <p><a type="button" class="btn btn-primary" href="/addGoods">添加商品</a></p>
@@ -13,6 +13,40 @@
             <td>发布时间</td>
             <td>操作</td>
         </tr>
+        <tr>
+        <% var count = 0%>
+        <% goods.forEach(function (good, index) { %>
+            <div class="col-md-1"><td><%= ++count%></td></div>
+            <div class="col-md-2"><td><%= good.name %></td></div>
+            <div class="col-md-2"><td>
+                    <form method="post">
+                        <div class="btn-group input-group number">
+                            <span class="input-group-btn">
+                                <a class="btn btn-default subNum" type="button">-</a>
+                            </span>
+                            <input name='count' type="text" class="form-control" value='<%= good.count%>'
+                                   onkeydown="checkInt();"
+                                   onblur="checkInt(); if($(this).val()==''){ $(this).val(<%= good.count%>); }">
+                            <span class="input-group-btn">
+                                <a class="btn btn-default addNum" type="button">+</a>
+                            </span>
+                        </div>
+                    </form>
+                </td>
+            </div>
+            <div class="col-md-2"><td><%= good.price %></td></div>
+            <div class="col-md-1"><td><%= good.unit %></td></div>
+            <div class="col-md-2"><td><%= good.addTime %></td></div>
+            <div class="col-md-2">
+                <td>
+                    <a href="/goodsInfo">详情</a>
+                    <a href="/deleteGoods">删除</a>
+                </td>
+            </div>
+        <% }) %>
+        </tr>
     </table>
 </div>
+
+<script src="../viewStage/backstage/goodManage.js"></script>
 <%- include footer%>

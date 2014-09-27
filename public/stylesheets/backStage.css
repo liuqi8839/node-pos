@@ -57,30 +57,8 @@ header
     height:500px;
 }
 
-/*
-goodsManage
-*/
-.goodsManage p,.goodsManage a{
-    margin-bottom:20px;
-}
 
-.goodsManage{
-    padding:10px 10px 0 10px;
-}
 
-.goodsManage .table a{
-    margin:0 10px 0 0;
-}
-
-.goodsManage .table a:hover{
-    color:#00f;
-}
-
-.goodsManage .shopNum{
-    padding:0;
-    width:34px;
-    height:34px;
-}
 /*
 addAttribute
 */

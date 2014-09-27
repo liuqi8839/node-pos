@@ -117,8 +117,16 @@ module.exports = function(app) {
     });
 
     app.get('/admin',function(req,res){
-        res.render('backstageViews/goodsManage',{
-            title:"商品管理"
+        Goods.getAll(function (err, goods) {
+            if (err) {
+                goods = [];
+            }
+            res.render('backstageViews/goodsManage', {
+                title: '商品管理',
+                goods: goods,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            });
         });
     });
 
