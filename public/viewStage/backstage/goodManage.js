@@ -29,7 +29,10 @@ var updateCount = function(THIS){
 $('.delete').on('click', function() {
     var THIS = this;
     var name = $(this).closest('tr').children().first().next().text();
-    $.post('/deleteGoods',{name: name},function() {
-        $(THIS).closest('tr').remove();
-    });
+    var tip = '确定要删除商品'+ name +'？';
+    if(confirm(tip)) {
+        $.post('/deleteGoods', {name: name}, function () {
+            $(THIS).closest('tr').remove();
+        });
+    }
 });
