@@ -46,6 +46,64 @@ Goods.prototype.save = function(callback){
     });
 };
 
+//更新商品及其相关信息
+Goods.update = function(name, goods, callback) {
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            //更新商品信息
+            collection.update({
+                "name": name
+            }, {
+                $set: goods
+            }, function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
+//跟新商品数量
+Goods.updateCount = function(name, count, callback) {
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            //更新商品信息
+            collection.update({
+                "name": name
+            }, {
+                $set: {count: count}
+            }, function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
 Goods.getName = function(name, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
@@ -93,6 +151,35 @@ Goods.getAll = function(callback){
                     return callback(err);
                 }
                 callback(null,goods);
+            });
+        });
+    });
+};
+
+//删除一篇文章
+Goods.remove = function(name, callback) {
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            //根据商品名称查找并删除商品
+            collection.remove({
+                "name": name
+            }, {
+                w: 1
+            }, function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
             });
         });
     });

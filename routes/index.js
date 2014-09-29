@@ -116,6 +116,9 @@ module.exports = function(app) {
         res.redirect('/cart');
     });
 
+
+    //backStage
+
     app.get('/admin',function(req,res){
         Goods.getAll(function (err, goods) {
             if (err) {
@@ -130,11 +133,33 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/goodsInfo',function(req,res){
-        res.render('backstageViews/goodsInfo',{
-            title:"商品详情"
+    app.get('/goodsInfo', function (req, res) {
+        Goods.getName( req.query.name,  function (err, good) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('back');
+            }
+            res.render('goodsInfo', {
+                title: '商品详情',
+                good: good,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            });
         });
     });
+
+    app.post('/goodsInfo/:name/:count/:price/:unit/:kind', function (req, res) {
+        var goods = {name: req.params.name, count: req.params.count, price: req.params.price, unit: req.params.unit, kind: req.params.kind};
+        Goods.update(req.params.name, goods, function (err) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/goodsInfo');//出错！返回文章页
+            }
+            req.flash('success', '修改成功!');
+            res.redirect('/goodsInfo');//成功！返回文章页
+        });
+    });
+};
 
     app.get('/addGoods',function(req,res){
         res.render('backstageViews/addGoods',{
@@ -158,11 +183,7 @@ module.exports = function(app) {
         }
         //检查商品名称是否已经存在
         Goods.getName(newGood.name, function (err,good) {
-            if (good) {
-                req.flash('error', '商品已存在!');
-                return res.redirect('/addGoods');//返回添加商品页页
-            }
-            //如果不存在则新增商品
+
             newGood.save(function (err) {
                 if (err) {
                     req.flash('error', err);
@@ -185,4 +206,44 @@ module.exports = function(app) {
             title:" 删除属性"
         });
     });
-};
+
+    app.post('/updateCount',function(req, res) {
+        var change = req.body.change;
+        var name = req.body.name;
+        var count = parseInt(req.body.count);
+        if(change == 'add') {
+            count = count + 1;
+        }
+        if(change == 'sub') {
+            count = count - 1;
+        }
+        Goods.updateCount(name, count, function (err) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/admin');//添加失败失败返回添加商品页
+            }
+            req.flash('success', '添加成功!');
+            res.redirect('/admin');//添加成功后返回商品管理页
+        });
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.write(count + "");
+        res.end();
+    });
+
+    app.post('/deleteGoods', function (req, res) {
+        var name = req.body.name;
+        Goods.remove(name, function (err) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('back');
+            }
+            req.flash('success', '删除成功!');
+            res.redirect('/admin');
+        });
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.end();
+    });
+
+
+
+

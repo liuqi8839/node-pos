@@ -3,49 +3,53 @@
     <p>商品信息管理</p>
     <p></p>
     <p><a type="button" class="btn btn-primary" href="/addGoods">添加商品</a></p>
-    <table class="table table-hover table-responsive">
-        <tr>
-            <td>序号</td>
-            <td>商品名称</td>
-            <td>商品数量</td>
-            <td>单价(元)</td>
-            <td>单位</td>
-            <td>发布时间</td>
-            <td>操作</td>
-        </tr>
-        <tr>
-        <% var count = 0%>
-        <% goods.forEach(function (good, index) { %>
-            <div class="col-md-1"><td><%= ++count%></td></div>
-            <div class="col-md-2"><td><%= good.name %></td></div>
-            <div class="col-md-2"><td>
-                    <form method="post">
-                        <div class="btn-group input-group number">
-                            <span class="input-group-btn">
-                                <a class="btn btn-default subNum" type="button">-</a>
-                            </span>
-                            <input name='count' type="text" class="form-control" value='<%= good.count%>'
-                                   onkeydown="checkInt();"
-                                   onblur="checkInt(); if($(this).val()==''){ $(this).val(<%= good.count%>); }">
-                            <span class="input-group-btn">
-                                <a class="btn btn-default addNum" type="button">+</a>
-                            </span>
-                        </div>
-                    </form>
-                </td>
-            </div>
-            <div class="col-md-2"><td><%= good.price %></td></div>
-            <div class="col-md-1"><td><%= good.unit %></td></div>
-            <div class="col-md-2"><td><%= good.addTime %></td></div>
-            <div class="col-md-2">
-                <td>
-                    <a href="/goodsInfo">详情</a>
-                    <a href="/deleteGoods">删除</a>
-                </td>
-            </div>
-        <% }) %>
-        </tr>
-    </table>
+    <form method="post">
+        <table class="table table-hover table-responsive">
+            <tr>
+                <td>序号</td>
+                <td>商品名称</td>
+                <td>商品数量</td>
+                <td>单价(元)</td>
+                <td>单位</td>
+                <td>发布时间</td>
+                <td>操作</td>
+            </tr>
+            <% var count = 0%>
+            <% goods.forEach(function (good, index) { %>
+            <tr>
+                <div class="col-md-1"><td><%= ++count%></td></div>
+                <div class="col-md-2"><td><%= good.name %></td></div>
+                <div class="col-md-2" id='goodsNum'>
+                    <td>
+                        <form method="post">
+                            <div class="btn-group input-group number">
+                                <span class="input-group-btn">
+                                    <a class="btn btn-default subNum" href="#">-</a>
+                                </span>
+                                <input name='count' type="text" class="form-control change" value='<%= good.count%>'
+                                       onkeydown="checkInt();"
+                                       onblur="checkInt(); if($(this).val()==''){ $(this).val(<%= good.count%>); }"
+                                       onchange="updateCount( $(this))">
+                                <span class="input-group-btn">
+                                    <a class="btn btn-default addNum" href="#">+</a>
+                                </span>
+                            </div>
+                        </form>
+                    </td>
+                </div>
+                <div class="col-md-2"><td><%= good.price %></td></div>
+                <div class="col-md-1"><td><%= good.unit %></td></div>
+                <div class="col-md-2"><td><%= good.addTime %></td></div>
+                <div class="col-md-2">
+                    <td>
+                        <a href="/goodsInfo/?name=<%= good.name%>">详情</a>
+                        <a class="delete" href="#">删除</a>
+                    </td>
+                </div>
+            <% }) %>
+            </tr>
+        </table>
+    </form>
 </div>
 
 <script src="../viewStage/backstage/goodManage.js"></script>
