@@ -13,14 +13,6 @@ $('.subNum').on('click', function() {
     }
 });
 
-$('.reset').on('click', function() {
-    $('#name').text('');
-    $('#price').text('');
-    $('#unit').text('');
-    $('#kind').text('');
-    $('#count').val(0);
-});
-
 function checkInt()
 {
     if(!(event.keyCode==46)&&!(event.keyCode==8)&&!(event.keyCode==37)&&!(event.keyCode==39))

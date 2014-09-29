@@ -139,7 +139,7 @@ module.exports = function(app) {
                 req.flash('error', err);
                 return res.redirect('back');
             }
-            res.render('goodsInfo', {
+            res.render('backstageViews/goodsInfo', {
                 title: '商品详情',
                 good: good,
                 success: req.flash('success').toString(),
@@ -148,18 +148,18 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/goodsInfo/:name/:count/:price/:unit/:kind', function (req, res) {
-        var goods = {name: req.params.name, count: req.params.count, price: req.params.price, unit: req.params.unit, kind: req.params.kind};
-        Goods.update(req.params.name, goods, function (err) {
+    app.post('/goodsInfo', function (req, res) {
+        var goods = {name: req.body.name, count: req.body.count, price: req.body.price, unit: req.body.unit, kind: req.body.kind};
+        Goods.update(req.body.name, goods, function (err) {
+            var url = '/goodsInfo/?name=' + req.body.name;
             if (err) {
                 req.flash('error', err);
-                return res.redirect('/goodsInfo');//出错！返回文章页
+                return res.redirect(url);//出错！返回文章页
             }
             req.flash('success', '修改成功!');
-            res.redirect('/goodsInfo');//成功！返回文章页
+            res.redirect(url);//成功！返回文章页
         });
     });
-};
 
     app.get('/addGoods',function(req,res){
         res.render('backstageViews/addGoods',{
@@ -243,7 +243,7 @@ module.exports = function(app) {
         res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });
-
+};
 
 
 
