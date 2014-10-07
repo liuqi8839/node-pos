@@ -64,24 +64,31 @@ addAttribute
 */
 .addAttribute{
     padding:10px 10px 0 10px;
+    width: 420px;
 }
 
-.addAttribute .formAdd{
-    padding-top:30px;
+.addAttribute .button{
+    width: 82px;
 }
 
-.addAttribute .formAdd form label{
-    text-align: left;
+.addAttribute input{
+    width: 146px;
+}
+
+.addAttribute .goodForm .form-group{
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.addAttribute .goodForm label{
     width:auto;
 }
 
-.formAdd form .btn{
-    margin-left:60px;
-}
-
-.addAttribute .nav a:hover{
-    color:#000;
-    text-decoration:none;
+.addAttribute .row {
+    height: 30px;
+    width: 500px;
+    border-top-width: 40px;
+    margin-top: 40px;
 }
 
 /*

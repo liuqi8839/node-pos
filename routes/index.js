@@ -196,14 +196,32 @@ module.exports = function(app) {
     });
 
     app.get('/addAttribute',function(req,res){
-        res.render('backstageViews/addAttribute',{
-            title:" 添加属性"
+        Goods.getName( req.query.name,  function (err, good) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('back');
+            }
+            res.render('backstageViews/addAttribute', {
+                title: '添加属性',
+                good: good,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            });
         });
     });
 
     app.get('/subAttribute',function(req,res){
-        res.render('backstageViews/subAttribute',{
-            title:" 删除属性"
+        Goods.getName( req.query.name,  function (err, good) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('back');
+            }
+            res.render('backstageViews/subAttribute', {
+                title: '删除属性',
+                good: good,
+                success: req.flash('success').toString(),
+                error: req.flash('error').toString()
+            });
         });
     });
 

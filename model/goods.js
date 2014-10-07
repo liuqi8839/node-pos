@@ -185,6 +185,36 @@ Goods.remove = function(name, callback) {
     });
 };
 
+Goods.prototype.addAttr = function(callback) {
+    var name = this.name;
+    var other = this.other;
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            //通过商品名称查找商品，并添加一个数组进
+            collection.update({
+                "name": name
+            }, {
+                $push: {"other": other}
+            } , function (err) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
 Goods.getTen = function(page,callback){
     //打开数据库
     mongodb.open(function(err,db){

@@ -1,3 +1,37 @@
 <%- include header %>
 
+<div class="col-xs-12 col-md-12 addAttribute">
+    <a  href="/admin">商品信息管理页</a>
+    >>
+    <a href="/addGoods">添加商品</a>
+    >>
+    <label>添加属性</label>
+
+    <div class="col-xs-1 col-md-8"></div>
+    <div class="col-xs-12 col-md-4 goodForm">
+        <form class="form-horizontal" role="form" method="post">
+            <div class="form-group col-md-12">
+                <label class="col-sm-2 control-label">属性名: &nbsp;&nbsp;</label>
+                <div class="col-sm-10">
+                    <input  name='attributeName' type="text" class="form-control" placeholder="请输入属性名" autofocus="true">
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label class="col-sm-2 control-label">属性值: &nbsp;&nbsp;</label>
+                <div class="col-sm-10">
+                    <input  name='attributeValue' type="text" class="form-control" placeholder="请输入属性值"
+                            onkeydown="checkAttribute();"
+                            onblur="checkAttribute();">
+                </div>
+            </div>
+            <div class="btnBar">
+                <div class="row">
+                    <div class="col-xs-3 col-md-3"><button type="submit" class="btn btn-info button">保存</button></div>
+                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/addAttribute">取消</a></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../viewStage/backstage/addAttribute.js"></script>
 <%- include footer%>
