@@ -18,13 +18,7 @@ $('.subNum').on('click', function() {
     }
 });
 
-var updateCount = function(THIS){
-    var count = +THIS.val();
-    var name = THIS.closest('tr').children().first().next().text();
-    $.post('/updateCount',{change: 'update', name: name, count: count},function(data){
-        THIS.val(data);
-    });
-};
+
 
 $('.delete').on('click', function() {
     var THIS = this;

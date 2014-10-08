@@ -149,9 +149,10 @@ module.exports = function(app) {
     });
 
     app.post('/goodsInfo', function (req, res) {
-        var goods = {name: req.body.name, count: req.body.count, price: req.body.price, unit: req.body.unit, kind: req.body.kind};
-        Goods.update(req.body.name, goods, function (err) {
-            var url = '/goodsInfo/?name=' + req.body.name;
+        var name = req.body.name;
+        var goods = {name: name, count: req.body.count, price: req.body.price, unit: req.body.unit, kind: req.body.kind};
+        Goods.update(name, goods, function (err) {
+            var url = '/goodsInfo/?name=' + name;
             if (err) {
                 req.flash('error', err);
                 return res.redirect(url);//出错！返回文章页
@@ -208,6 +209,14 @@ module.exports = function(app) {
                 error: req.flash('error').toString()
             });
         });
+    });
+
+    app.post('/addAttribute',function(req,res){
+        var attrName = req.body.attrName;
+        var attrValue = req.body.attrValue;
+        if(attrName == '生产日期' && typeof attrValue) {
+
+        }
     });
 
     app.get('/subAttribute',function(req,res){
