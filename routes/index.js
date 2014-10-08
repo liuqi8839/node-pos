@@ -158,7 +158,7 @@ module.exports = function(app) {
                 req.flash('error', err);
                 return res.redirect(url);//出错！返回文章页
             }
-            req.flash('success', '修改成功!');
+            req.flash('success', '保存成功!');
             res.redirect(url);//成功！返回文章页
         });
     });
@@ -180,8 +180,20 @@ module.exports = function(app) {
     });
 
     app.post('/addGoods', function(req,res){
-        var newGood = new Goods(req.body);
-        console.log(req.body);
+        var good = {
+            kind : req.body.kind,
+            name : req.body.name,
+            price : req.body.price,
+            unit : req.body.unit,
+            count : req.body.count,
+            other : []
+        };
+        for(var attr in req.body){
+            if(attr != 'kind' && attr != 'name' && attr != 'price' && attr != 'unit' && attr != 'count') {
+                good.other.push({attrName: attr, attrValue: req.body[attr]});
+            }
+        }
+        var newGood = new Goods(good);
         if (newGood.kind == '' || newGood.name == '' || newGood.price == '' || newGood.unit == '' || newGood.count == '') {
             req.flash('error', '信息都不能为空!');
             return res.redirect('/addGoods');//返回添加商品页页

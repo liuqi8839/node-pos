@@ -7,7 +7,7 @@ function Goods(good){
     this.price = good.price;
     this.unit = good.unit;
     this.count = good.count;
-    this.other = {};
+    this.other = good.other;
 }
 
 module.exports = Goods;
