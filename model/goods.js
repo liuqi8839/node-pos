@@ -7,6 +7,7 @@ function Goods(good){
     this.price = good.price;
     this.unit = good.unit;
     this.count = good.count;
+    this.other = {};
 }
 
 module.exports = Goods;
@@ -19,7 +20,8 @@ Goods.prototype.save = function(callback){
         name:this.name,
         price:this.price,
         unit:this.unit,
-        count:this.count
+        count:this.count,
+        other: this.other
     };
     //打开数据库
     mongodb.open(function(err,db){
@@ -38,6 +40,35 @@ Goods.prototype.save = function(callback){
             },function(err){
                 mongodb.close();
                 if(err){
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
+//添加属性
+Goods.addAttr = function(name, other, callback) {
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            //通过商品名称查找商品，并添加一个数组进
+            collection.update({
+                "name": name
+            }, {
+                $push: {"other": other}
+            } , function (err) {
+                mongodb.close();
+                if (err) {
                     return callback(err);
                 }
                 callback(null);
@@ -75,7 +106,7 @@ Goods.update = function(name, goods, callback) {
     });
 };
 
-//跟新商品数量
+//更新商品数量
 Goods.updateCount = function(name, count, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
@@ -130,7 +161,7 @@ Goods.getName = function(name, callback) {
     });
 };
 
-//读取商品及其相关信息
+//读取所有商品及其相关信息
 Goods.getAll = function(callback){
     //打开数据库
     mongodb.open(function(err,db){
@@ -156,7 +187,7 @@ Goods.getAll = function(callback){
     });
 };
 
-//删除一篇文章
+//删除一种商品
 Goods.remove = function(name, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
@@ -175,36 +206,6 @@ Goods.remove = function(name, callback) {
             }, {
                 w: 1
             }, function (err) {
-                mongodb.close();
-                if (err) {
-                    return callback(err);
-                }
-                callback(null);
-            });
-        });
-    });
-};
-
-Goods.prototype.addAttr = function(callback) {
-    var name = this.name;
-    var other = this.other;
-    //打开数据库
-    mongodb.open(function (err, db) {
-        if (err) {
-            return callback(err);
-        }
-        //读取 goods 集合
-        db.collection('goods', function (err, collection) {
-            if (err) {
-                mongodb.close();
-                return callback(err);
-            }
-            //通过商品名称查找商品，并添加一个数组进
-            collection.update({
-                "name": name
-            }, {
-                $push: {"other": other}
-            } , function (err) {
                 mongodb.close();
                 if (err) {
                     return callback(err);

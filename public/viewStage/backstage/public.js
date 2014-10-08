@@ -19,12 +19,6 @@ function checkDecimal()
 /**
  * use by addAttribute
  */
-var checkName = function() {
-    checkNull();
-};
-var checkValue = function() {
-    checkNull();
-};
 
 var checkNull = function() {
     var flag = true;

@@ -117,8 +117,9 @@ module.exports = function(app) {
     });
 
 
-    //backStage
-
+    /**
+     * backStage
+    */
     app.get('/admin',function(req,res){
         Goods.getAll(function (err, goods) {
             if (err) {
@@ -163,33 +164,41 @@ module.exports = function(app) {
     });
 
     app.get('/addGoods',function(req,res){
+        if(!req.session.thisInfo) {
+            req.session.thisInfo = [];
+        }
+        if(!req.session.newAttr) {
+            req.session.newAttr = [];
+        }
         res.render('backstageViews/addGoods',{
             title:" 添加商品",
+            thisInfo: req.session.thisInfo,
+            newAttr: req.session.newAttr,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         });
     });
 
     app.post('/addGoods', function(req,res){
-        var newGood = new Goods({
-            kind:req.body.kind,
-            name:req.body.name,
-            price:req.body.price,
-            unit:req.body.unit,
-            count:req.body.count
-        });
+        var newGood = new Goods(req.body);
+        console.log(req.body);
         if (newGood.kind == '' || newGood.name == '' || newGood.price == '' || newGood.unit == '' || newGood.count == '') {
             req.flash('error', '信息都不能为空!');
             return res.redirect('/addGoods');//返回添加商品页页
         }
         //检查商品名称是否已经存在
         Goods.getName(newGood.name, function (err,good) {
-
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/addGoods');//添加失败失败返回添加商品页
+            }
             newGood.save(function (err) {
                 if (err) {
                     req.flash('error', err);
                     return res.redirect('/addGoods');//添加失败失败返回添加商品页
                 }
+                req.session.thisInfo = [];
+                req.session.newAttr = [];
                 req.flash('success', '添加成功!');
                 res.redirect('/admin');//添加成功后返回商品管理页
             });
@@ -214,17 +223,9 @@ module.exports = function(app) {
     app.post('/addAttribute',function(req,res){
         var attrName = req.body.attrName;
         var attrValue = req.body.attrValue;
-        if(attrName == '生产日期' && !checkDateType(attrValue)) {
-            alert("请输入正确的日期");
-            return res.redirect('/addAttribute');
-        }
-        if(attrName == '编码' && typeof(attrValue)!="number") {
-            alert('编码请输入数字');
-            return res.redirect('/addAttribute');
-        }
-        if(attrName == '电话') {
-            return res.redirect('/addAttribute');
-        }
+        req.session.newAttr.push({attrName: attrName, attrValue: attrValue});
+        res.redirect('/addGoods');
+
     });
 
     app.get('/subAttribute',function(req,res){
@@ -273,12 +274,13 @@ module.exports = function(app) {
                 return res.redirect('back');
             }
             req.flash('success', '删除成功!');
-            res.redirect('/admin');
         });
         res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });
+
+    app.post('/saveThisInfo', function(req, res) {
+        req.session.thisInfo = req.body.good;
+        res.end();
+    });
 };
-
-
-
