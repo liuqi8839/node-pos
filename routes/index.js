@@ -216,9 +216,14 @@ module.exports = function(app) {
         var attrValue = req.body.attrValue;
         if(attrName == '生产日期' && !checkDateType(attrValue)) {
             alert("请输入正确的日期");
+            return res.redirect('/addAttribute');
         }
-        else{
-
+        if(attrName == '编码' && typeof(attrValue)!="number") {
+            alert('编码请输入数字');
+            return res.redirect('/addAttribute');
+        }
+        if(attrName == '电话') {
+            return res.redirect('/addAttribute');
         }
     });
 

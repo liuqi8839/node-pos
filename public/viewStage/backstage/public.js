@@ -41,12 +41,24 @@ var checkNull = function() {
     }
 };
 
-function checkDateType(date) {
-    var result = date.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+function checkDateType(attrValue) {
+    var result = attrValue.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
     if (result == null)
         return false;
     var d = new Date(result[1], result[3] - 1, result[4]);
     return (d.getFullYear() == result[1] && (d.getMonth() + 1) == result[3] && d.getDate() == result[4]);
+}
+
+/*判断输入是否为合法的手机号码*/
+function isPhone(attrValue) {
+    var checkLandline = /^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
+    var checkCellPhone = /^1[358]\d{9}$/;
+    if(!checkLandline.test(attrValue) && !checkCellPhone.test(attrValue)) {
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 /**
