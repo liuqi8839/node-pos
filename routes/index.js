@@ -237,7 +237,6 @@ module.exports = function(app) {
         var attrValue = req.body.attrValue;
         req.session.newAttr.push({attrName: attrName, attrValue: attrValue});
         res.redirect('/addGoods');
-
     });
 
     app.get('/subAttribute',function(req,res){
@@ -281,6 +280,20 @@ module.exports = function(app) {
     app.post('/deleteGoods', function (req, res) {
         var name = req.body.name;
         Goods.remove(name, function (err) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('back');
+            }
+            req.flash('success', '删除成功!');
+        });
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.end();
+    });
+
+    app.post('/deleteAttr', function (req, res) {
+        var name = req.body.name;
+        var attrName = req.body.attrName;
+        Goods.deleteAttr(name, attrName, function (err) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');

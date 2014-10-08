@@ -21,5 +21,5 @@ $('.addAttr').click(function() {
         unit: $('#unit').val(),
         kind: $('#kind').val()
     };
-    $.post('/saveThisInfo',{good: good},function(data){});
+    $.post('/saveThisInfo',{good: good});
 });

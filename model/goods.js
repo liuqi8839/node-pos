@@ -216,6 +216,37 @@ Goods.remove = function(name, callback) {
     });
 };
 
+Goods.deleteAttr = function(name, attrName, callback){
+    //打开数据库
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        //读取goods集合
+        db.collection('goods',function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.update({
+                name:name
+            }, {
+                $pull:{
+                    other:{
+                        attrName: attrName
+                    }
+                }
+            }, function(err){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
 Goods.getTen = function(page,callback){
     //打开数据库
     mongodb.open(function(err,db){
