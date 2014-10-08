@@ -1,3 +1,5 @@
-/**
- * Created by apple on 14-10-7.
- */
+$('.save').click(function() {
+    if(!checkDateType($('input').last().val())) {
+        alert("请输入正确的日期");
+    }
+});

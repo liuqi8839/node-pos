@@ -214,7 +214,10 @@ module.exports = function(app) {
     app.post('/addAttribute',function(req,res){
         var attrName = req.body.attrName;
         var attrValue = req.body.attrValue;
-        if(attrName == '生产日期' && typeof attrValue) {
+        if(attrName == '生产日期' && !checkDateType(attrValue)) {
+            alert("请输入正确的日期");
+        }
+        else{
 
         }
     });
