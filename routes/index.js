@@ -135,6 +135,9 @@ module.exports = function(app) {
     });
 
     app.get('/goodsInfo', function (req, res) {
+        if(!req.session.newAttr) {
+            req.session.newAttr = [];
+        }
         Goods.getName( req.query.name,  function (err, good) {
             if (err) {
                 req.flash('error', err);
@@ -143,6 +146,7 @@ module.exports = function(app) {
             res.render('backstageViews/goodsInfo', {
                 title: '商品详情',
                 good: good,
+                newAttr: req.session.newAttr,
                 success: req.flash('success').toString(),
                 error: req.flash('error').toString()
             });
@@ -151,13 +155,26 @@ module.exports = function(app) {
 
     app.post('/goodsInfo', function (req, res) {
         var name = req.body.name;
-        var goods = {name: name, count: req.body.count, price: req.body.price, unit: req.body.unit, kind: req.body.kind};
+        var goods = {
+            name: name,
+            count: req.body.count,
+            price: req.body.price,
+            unit: req.body.unit,
+            kind: req.body.kind,
+            other: []
+        };
+        for(var attr in req.body) {
+            if(attr != 'kind' && attr != 'name' && attr != 'price' && attr != 'unit' && attr != 'count') {
+                goods.other.push({attrName: attr, attrValue: req.body[attr]});
+            }
+        }
         Goods.update(name, goods, function (err) {
             var url = '/goodsInfo/?name=' + name;
             if (err) {
                 req.flash('error', err);
                 return res.redirect(url);//出错！返回文章页
             }
+            req.session.newAttr = [];
             req.flash('success', '保存成功!');
             res.redirect(url);//成功！返回文章页
         });

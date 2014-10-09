@@ -21,12 +21,12 @@ $('.subNum').on('click', function() {
 
 
 $('.delete').on('click', function() {
-    var THIS = this;
     var name = $(this).closest('tr').children().first().next().text();
     var tip = '确定要删除商品'+ name +'？';
     if(confirm(tip)) {
         $.post('/deleteGoods', {name: name}, function () {
-            $(THIS).closest('tr').remove();
+            alert('删除成功！');
+            location.href='/admin';
         });
     }
 });
