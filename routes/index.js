@@ -234,8 +234,15 @@ module.exports = function(app) {
     });
 
     app.get('/addAttribute',function(req,res){
+        if(req.query.from == 'addGoods'){
+            var thisInfo = req.session.thisInfo
+        }
+        else{
+            thisInfo = {};
+        }
         res.render('backstageViews/addAttribute', {
             title: '添加属性',
+            thisInfo: thisInfo,
             from : req.query.from,
             goodName: req.query.name,
             success: req.flash('success').toString(),
