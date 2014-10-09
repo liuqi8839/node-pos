@@ -3,7 +3,12 @@
 <div class="col-xs-12 col-md-12 addAttribute">
     <a  href="/admin">商品信息管理页</a>
     >>
+    <% if(from == 'addGoods'){%>
     <a href="/addGoods">添加商品</a>
+    <% }%>
+    <% if(from == 'goodsInfo'){%>
+    <a href="/goodsInfo/?name=<%= name%>"><%= name%></a>
+    <% }%>
     >>
     <label>添加属性</label>
 
@@ -35,5 +40,7 @@
         </form>
     </div>
 </div>
+
 <script src="../viewStage/backstage/addAttribute.js"></script>
+
 <%- include footer%>

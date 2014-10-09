@@ -3,7 +3,12 @@
     <div>
         <a  href="/admin">商品信息管理页</a>
         >>
-        <a href="/goodsInfo/?name=<%= good.name%>"><%= good.name%></a>
+        <% if(from == 'addGoods'){%>
+        <a href="/addGoods">添加商品</a>
+        <% }%>
+        <% if(from == 'goodsInfo'){%>
+        <a href="/goodsInfo/?name=<%=  good.name%>">商品详情</a>
+        <% }%>
         >>
         <label>删除属性</label>
     </div>

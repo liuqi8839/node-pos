@@ -235,17 +235,12 @@ module.exports = function(app) {
     });
 
     app.get('/addAttribute',function(req,res){
-        Goods.getName( req.query.name,  function (err, good) {
-            if (err) {
-                req.flash('error', err);
-                return res.redirect('back');
-            }
-            res.render('backstageViews/addAttribute', {
-                title: '添加属性',
-                good: good,
-                success: req.flash('success').toString(),
-                error: req.flash('error').toString()
-            });
+        res.render('backstageViews/addAttribute', {
+            title: '添加属性',
+            from : req.query.from,
+            name: req.query.name,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
         });
     });
 
@@ -254,6 +249,7 @@ module.exports = function(app) {
         var attrValue = req.body.attrValue;
         req.session.newAttr.push({attrName: attrName, attrValue: attrValue});
         res.redirect('/addGoods');
+        res.end();
     });
 
     app.get('/subAttribute',function(req,res){
@@ -265,6 +261,7 @@ module.exports = function(app) {
             res.render('backstageViews/subAttribute', {
                 title: '删除属性',
                 good: good,
+                from: req.query.from,
                 success: req.flash('success').toString(),
                 error: req.flash('error').toString()
             });
