@@ -21,5 +21,7 @@ $('.addAttr').click(function() {
         unit: $('#unit').val(),
         kind: $('#kind').val()
     };
-    $.post('/saveThisInfo',{good: good});
+    $.post('/saveThisInfo',{good: good}, function() {
+        location.href='/addAttribute/?from=addGoods';
+    });
 });

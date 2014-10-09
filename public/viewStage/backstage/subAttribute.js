@@ -16,7 +16,7 @@ $('.deleteNew').click(function() {
     var tip = '确定要删除此商品属性？';
     if(confirm(tip)) {
         $.post('/deleteAttr', {name: name, attrName: attrName, status: 'new'}, function () {
-            location.href='/goodsInfo/?name='+name;
+            location.href='/addGoods';
         });
     }
 });

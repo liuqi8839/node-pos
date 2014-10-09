@@ -29,8 +29,8 @@
                                 </span>
                                 <input name='count' type="text" class="form-control change" value='<%= good.count%>'
                                        onkeydown="checkInt();"
-                                       onblur="checkInt(); if($(this).val()==''){ $(this).val(<%= good.count%>); }"
-                                       onchange="updateCount( $(this))">
+                                       onblur="checkInt();updateCount( $(this)); if($(this).val()==''){ $(this).val(<%= good.count%>); }"
+                                       >
                                 <span class="input-group-btn">
                                     <a class="btn btn-default addNum" href="#">+</a>
                                 </span>
