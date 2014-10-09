@@ -1,4 +1,4 @@
-<%- include header%>
+<%- include header %>
 
 <script src="/viewStage/pay.js"></script>
 
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                 <% var actualCost = 0, totalPay = 0, initialCost = 0, benefit = 0, totalBenefit = 0; %>
-                <% goods.forEach(function(good,index){ %>
+                <% goods.forEach(function(good,index) { %>
                 <tr>
                     <td><%= good.kind %></td>
                     <td><%= good.name %></td>
@@ -73,13 +73,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% promotions.forEach(function(promotion,index){%>
+                <% promotions.forEach(function(promotion,index) {%>
                 <tr>
                     <td><%= promotion.kind %></td>
                     <td><%= promotion.name %></td>
                     <td><%= promotion.num %></td>
                 </tr>
-                <% })%>
+                <% }) %>
                 </tbody>
             </table>
         </div>
@@ -89,4 +89,4 @@
     </div>
 </div>
 
-<%- include footer%>
+<%- include footer %>

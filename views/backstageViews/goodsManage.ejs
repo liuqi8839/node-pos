@@ -15,10 +15,10 @@
                 <td>发布时间</td>
                 <td>操作</td>
             </tr>
-            <% var count = 0%>
-            <% goods.forEach(function (good, index) { %>
+            <% var count = 0 %>
+            <% goods.forEach( function (good, index) { %>
             <tr>
-                <div class="col-md-1"><td><%= ++count%></td></div>
+                <div class="col-md-1"><td><%= ++count %></td></div>
                 <div class="col-md-2"><td><%= good.name %></td></div>
                 <div class="col-md-2" id='goodsNum'>
                     <td>
@@ -27,9 +27,9 @@
                                 <span class="input-group-btn">
                                     <a class="btn btn-default subNum" href="#">-</a>
                                 </span>
-                                <input name='count' type="text" class="form-control change" value='<%= good.count%>'
+                                <input name='count' type="text" class="form-control change" value='<%= good.count %>'
                                        onkeydown="checkInt();"
-                                       onblur="checkInt();updateCount( $(this)); if($(this).val()==''){ $(this).val(<%= good.count%>); }"
+                                       onblur="checkInt();updateCount( $(this)); if($(this).val()==''){ $(this).val(<%= good.count %>); }"
                                        >
                                 <span class="input-group-btn">
                                     <a class="btn btn-default addNum" href="#">+</a>
@@ -43,7 +43,7 @@
                 <div class="col-md-2"><td><%= good.addTime %></td></div>
                 <div class="col-md-2">
                     <td>
-                        <a href="/goodsInfo/?name=<%= good.name%>">详情</a>
+                        <a href="/goodsInfo/?name=<%= good.name %>">详情</a>
                         <a class="delete" href="#">删除</a>
                     </td>
                 </div>
@@ -55,4 +55,4 @@
 <%- include paging %>
 
 <script src="../viewStage/backstage/goodManage.js"></script>
-<%- include footer%>
+<%- include footer %>

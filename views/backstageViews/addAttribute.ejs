@@ -3,12 +3,12 @@
 <div class="col-xs-12 col-md-12 addAttribute">
     <a  href="/admin">商品信息管理页</a>
     >>
-    <% if(from == 'addGoods'){%>
+    <% if(from == 'addGoods') { %>
     <a id="from" href="/addGoods">添加商品</a>
-    <% }%>
-    <% if(from == 'goodsInfo'){%>
-    <a id="from" href="/goodsInfo/?name=<%= goodName%>"><%= goodName%></a>
-    <% }%>
+    <% } %>
+    <% if(from == 'goodsInfo') { %>
+    <a id="from" href="/goodsInfo/?name=<%= goodName %>"><%= goodName %></a>
+    <% } %>
     >>
     <label>添加属性</label>
 
@@ -32,12 +32,12 @@
             <div class="btnBar">
                 <div class="row">
                     <div class="col-xs-3 col-md-3"><button type="button" class="btn btn-info button save" disabled="disabled">保存</button></div>
-                    <% if(from == 'addGoods'){%>
+                    <% if(from == 'addGoods') { %>
                     <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/addGoods">取消</a></div>
                     <% }%>
-                    <% if(from == 'goodsInfo'){%>
-                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/goodsInfo/?name=<%= goodName%>">取消</a></div>
-                    <% }%>
+                    <% if(from == 'goodsInfo') { %>
+                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/goodsInfo/?name=<%= goodName %>">取消</a></div>
+                    <% } %>
                 </div>
             </div>
         </form>
@@ -46,4 +46,4 @@
 
 <script src="../viewStage/backstage/addAttribute.js"></script>
 
-<%- include footer%>
+<%- include footer %>

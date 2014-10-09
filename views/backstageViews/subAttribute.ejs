@@ -3,12 +3,12 @@
     <div>
         <a  href="/admin">商品信息管理页</a>
         >>
-        <% if(from == 'addGoods'){%>
+        <% if(from == 'addGoods') { %>
         <a href="/addGoods">添加商品</a>
-        <% }%>
-        <% if(from == 'goodsInfo'){%>
-        <a href="/goodsInfo/?name=<%=  good.name%>"><%=  good.name%></a>
-        <% }%>
+        <% } %>
+        <% if(from == 'goodsInfo') { %>
+        <a href="/goodsInfo/?name=<%=  good.name %>"><%=  good.name %></a>
+        <% } %>
         >>
         <label>删除属性</label>
     </div>
@@ -18,9 +18,9 @@
             <td>属性值</td>
             <td>操作</td>
         </tr>
-        <% for(var attributes in good){%>
-        <% if(attributes == 'other') {%>
-        <% good[attributes].forEach(function(attr){ %>
+        <% for(var attributes in good) { %>
+        <% if(attributes == 'other') { %>
+        <% good[attributes].forEach( function(attr) { %>
         <tr class="otherAttr">
             <div class="col-md-4"><td><%= attr.attrName %></td></div>
             <div class="col-md-4"><td><%= attr.attrValue %></td></div>
@@ -30,9 +30,9 @@
                 </td>
             </div>
         <% }) %>
-        <% }}%>
+        <% }} %>
         </tr>
-        <% newAttr.forEach(function(attr){ %>
+        <% newAttr.forEach( function(attr) { %>
         <tr class="otherAttr">
             <div class="col-md-4"><td><%= attr.attrName %></td></div>
             <div class="col-md-4"><td><%= attr.attrValue %></td></div>
@@ -48,4 +48,4 @@
 
 <script src="../viewStage/backstage/subAttribute.js"></script>
 
-<%- include footer%>
+<%- include footer %>

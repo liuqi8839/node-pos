@@ -1,4 +1,4 @@
-<%- include header%>
+<%- include header %>
 
 
 <div class="container theme-showcase" role="main">
@@ -28,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% goods.forEach(function(good,index){ %>
+                <% goods.forEach(function(good,index) { %>
                 <tr>
                     <td><%= good.kind %></td>
                     <td><%= good.name %></td>
@@ -37,7 +37,7 @@
                     <td class="hidden"><%= good.twosendone %></td>
                     <td><a class="btn btn-primary addGood" type="button" href="#">加入购物车</a></td>
                 </tr>
-                <% })%>
+                <% }) %>
                 </tbody>
             </table>
         </div>
@@ -46,5 +46,5 @@
 
 <script src="/viewStage/item_list.js"></script>
 
-<%- include footer%>
+<%- include footer %>
 
