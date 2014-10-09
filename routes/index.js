@@ -120,13 +120,19 @@ module.exports = function(app) {
      * backStage
     */
     app.get('/admin',function(req,res){
-        Goods.getAll(function (err, goods) {
+        //判断是否是第一页，并把请求的页数转换成 number 类型
+        var page = req.query.p ? parseInt(req.query.p) : 1;
+        //查询并返回第 page 页的 5 件商品
+         Goods.getFive(page, function (err, goods, total) {
             if (err) {
                 goods = [];
             }
             res.render('backstageViews/goodsManage', {
                 title: '商品管理',
                 goods: goods,
+                page: page,
+                isFirstPage: (page - 1) == 0,
+                isLastPage: ((page - 1) * 5 + goods.length) == total,
                 success: req.flash('success').toString(),
                 error: req.flash('error').toString()
             });
