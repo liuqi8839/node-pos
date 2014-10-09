@@ -223,15 +223,15 @@ module.exports = function(app) {
             }
         }
         var newGood = new Goods(good);
-        if (newGood.kind == '' || newGood.name == '' || newGood.price == '' || newGood.unit == '' || newGood.count == '') {
-            req.flash('error', '信息都不能为空!');
-            return res.redirect('/addGoods');//返回添加商品页页
-        }
         //检查商品名称是否已经存在
         Goods.getName(newGood.name, function (err,good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/addGoods');//添加失败失败返回添加商品页
+            }
+            if(good.name == newGood.name) {
+                req.flash('success', '商品重复!');
+                 return res.redirect('/addGoods');//添加成功后返回商品管理页
             }
             newGood.save(function (err) {
                 if (err) {
