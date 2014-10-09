@@ -23,18 +23,22 @@ function checkDecimal()
 
 var checkNull = function() {
     var flag = true;
-    $("input").each(function(){
-        if($(this).val()==""){
+    $("input").each( function() {
+        if($(this).val() == "") {
             flag = false;
         }
     });
-    if(flag){
-        $('.save').attr("disabled",false);
+    if($('#count').val() == 0) {
+        flag = false;
     }
-    else{
-        $('.save').attr("disabled",true)
+    if(flag) {
+        $('.save').attr("disabled", false);
+    }
+    else {
+        $('.save').attr("disabled", true)
     }
 };
+
 
 function checkDateType(attrValue) {
     var result = attrValue.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);

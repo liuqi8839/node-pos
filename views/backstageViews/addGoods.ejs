@@ -7,7 +7,7 @@
         <form class="form-horizontal" role="form" method="post">
             <div class="btnBar">
                 <div class="row">
-                    <div class="col-xs-3 col-md-3"><button type="submit" class="btn btn-primary" disabled="disabled">保存商品</button></div>
+                    <div class="col-xs-3 col-md-3"><button type="submit" class="btn btn-primary save" disabled="disabled">保存商品</button></div>
                     <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-primary addAttr">添加属性</a></div>
                     <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-primary" href="/subAttribute/?from=addGoods">删除属性</a></div>
                     <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-primary reset" href="/addGoods">取消</a></div>
@@ -28,7 +28,7 @@
                 <label class="col-sm-2 control-label">商品数量: &nbsp;&nbsp;</label>
                 <div class="btn-group col-sm-10 input-group number">
                     <span class="input-group-btn">
-                        <a class="btn btn-default subNum" type="button">-</a>
+                        <a class="btn btn-default subNum" type="button" onmousemove="checkNull()">-</a>
                     </span>
                     <input name='count' id="count" type="text" class="form-control"
                             <% if(thisInfo.count != undefined) { %>
@@ -40,7 +40,7 @@
                            onkeydown="checkInt();"
                            onblur="checkInt(); if($(this).val()==''){ $(this).val(0); }">
                     <span class="input-group-btn">
-                        <a class="btn btn-default addNum" type="button">+</a>
+                        <a class="btn btn-default addNum" type="button" onmousemove="checkNull()">+</a>
                     </span>
                 </div>
             </div>
