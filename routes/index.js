@@ -25,7 +25,6 @@ module.exports = function(app) {
     });
 
     app.get('/item_list', function (req, res) {
-
         Goods.getAll(function(err,goods){
             if(err){
                 goods = [];
@@ -238,17 +237,16 @@ module.exports = function(app) {
         res.render('backstageViews/addAttribute', {
             title: '添加属性',
             from : req.query.from,
-            name: req.query.name,
+            goodName: req.query.name,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         });
     });
 
     app.post('/addAttribute',function(req,res){
-        var attrName = req.body.attrName;
-        var attrValue = req.body.attrValue;
-        req.session.newAttr.push({attrName: attrName, attrValue: attrValue});
-        res.redirect('/addGoods');
+        req.session.newAttr.push({attrName: req.body.attrName, attrValue: req.body.attrValue});
+
+        res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });
 
@@ -260,6 +258,7 @@ module.exports = function(app) {
             }
             res.render('backstageViews/subAttribute', {
                 title: '删除属性',
+                newAttr :req.session.newAttr,
                 good: good,
                 from: req.query.from,
                 success: req.flash('success').toString(),
@@ -305,15 +304,27 @@ module.exports = function(app) {
     });
 
     app.post('/deleteAttr', function (req, res) {
+        var status = req.body.status;
         var name = req.body.name;
         var attrName = req.body.attrName;
-        Goods.deleteAttr(name, attrName, function (err) {
-            if (err) {
-                req.flash('error', err);
-                return res.redirect('back');
+        if(status == 'has'){
+            Goods.deleteAttr(name, attrName, function (err) {
+                if (err) {
+                    req.flash('error', err);
+                    return res.redirect('back');
+                }
+                req.flash('success', '删除成功!');
+            });
+        }
+        if(status == 'new') {
+            var newAttr = req.session.newAttr;
+            for(var i = 0; i < newAttr.length; i++) {
+                if(newAttr[i].attrName == attrName) {
+                    newAttr.splice(i,1);
+                }
             }
-            req.flash('success', '删除成功!');
-        });
+            req.session.newAttr = newAttr;
+        }
         res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });

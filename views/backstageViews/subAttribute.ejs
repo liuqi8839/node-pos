@@ -7,7 +7,7 @@
         <a href="/addGoods">添加商品</a>
         <% }%>
         <% if(from == 'goodsInfo'){%>
-        <a href="/goodsInfo/?name=<%=  good.name%>">商品详情</a>
+        <a href="/goodsInfo/?name=<%=  good.name%>"><%=  good.name%></a>
         <% }%>
         >>
         <label>删除属性</label>
@@ -21,17 +21,28 @@
         <% for(var attributes in good){%>
         <% if(attributes == 'other') {%>
         <% good[attributes].forEach(function(attr){ %>
-        <tr class="newAttr">
+        <tr class="otherAttr">
             <div class="col-md-4"><td><%= attr.attrName %></td></div>
             <div class="col-md-4"><td><%= attr.attrValue %></td></div>
             <div class="col-md-4">
                 <td>
-                    <a class="delete" href="#">删除</a>
+                    <a class="deleteHas" href="#">删除</a>
                 </td>
             </div>
         <% }) %>
         <% }}%>
         </tr>
+        <% newAttr.forEach(function(attr){ %>
+        <tr class="otherAttr">
+            <div class="col-md-4"><td><%= attr.attrName %></td></div>
+            <div class="col-md-4"><td><%= attr.attrValue %></td></div>
+            <div class="col-md-4">
+                <td>
+                    <a class="deleteNew" href="#">删除</a>
+                </td>
+            </div>
+        </tr>
+        <% }) %>
     </table>
 </div>
 
