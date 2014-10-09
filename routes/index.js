@@ -120,6 +120,8 @@ module.exports = function(app) {
      * backStage
     */
     app.get('/admin',function(req,res){
+        req.session.newAttr = [];
+        req.session.thisInfo = {};
         //判断是否是第一页，并把请求的页数转换成 number 类型
         var page = req.query.p ? parseInt(req.query.p) : 1;
         //查询并返回第 page 页的 5 件商品
@@ -143,6 +145,9 @@ module.exports = function(app) {
         if(!req.session.newAttr) {
             req.session.newAttr = [];
         }
+        if(!req.session.thisInfo) {
+            req.session.thisInfo = {};
+        }
         Goods.getName( req.query.name,  function (err, good) {
             if (err) {
                 req.flash('error', err);
@@ -151,6 +156,7 @@ module.exports = function(app) {
             res.render('backstageViews/goodsInfo', {
                 title: '商品详情',
                 good: good,
+                thisInfo: req.session.thisInfo,
                 newAttr: req.session.newAttr,
                 success: req.flash('success').toString(),
                 error: req.flash('error').toString()
@@ -179,6 +185,7 @@ module.exports = function(app) {
                 req.flash('error', err);
                 return res.redirect(url);//出错！返回文章页
             }
+            req.session.thisInfo = {};
             req.session.newAttr = [];
             req.flash('success', '保存成功!');
             res.redirect(url);//成功！返回文章页
@@ -187,7 +194,7 @@ module.exports = function(app) {
 
     app.get('/addGoods',function(req,res){
         if(!req.session.thisInfo) {
-            req.session.thisInfo = [];
+            req.session.thisInfo = {};
         }
         if(!req.session.newAttr) {
             req.session.newAttr = [];
@@ -231,7 +238,7 @@ module.exports = function(app) {
                     req.flash('error', err);
                     return res.redirect('/addGoods');//添加失败失败返回添加商品页
                 }
-                req.session.thisInfo = [];
+                req.session.thisInfo = {};
                 req.session.newAttr = [];
                 req.flash('success', '添加成功!');
                 res.redirect('/admin');//添加成功后返回商品管理页
@@ -258,7 +265,6 @@ module.exports = function(app) {
 
     app.post('/addAttribute',function(req,res){
         req.session.newAttr.push({attrName: req.body.attrName, attrValue: req.body.attrValue});
-
         res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });
@@ -344,6 +350,12 @@ module.exports = function(app) {
 
     app.post('/saveThisInfo', function(req, res) {
         req.session.thisInfo = req.body.good;
+        res.end();
+    });
+
+    app.post('/reset', function(req, res) {
+        req.session.thisInfo = {};
+        req.session.newAttr = [];
         res.end();
     });
 };

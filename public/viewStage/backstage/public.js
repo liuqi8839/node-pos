@@ -16,6 +16,7 @@ function checkDecimal()
             event.returnValue=false;
 }
 
+
 /**
  * use by addAttribute
  */
@@ -65,3 +66,4 @@ var updateCount = function(THIS){
         THIS.val(data);
     });
 };
+

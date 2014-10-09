@@ -1,5 +1,5 @@
 
-$('.addNum').click(function() {
+$('.addNum').click( function() {
     var findNum = $('.number').find('input');
     var number = +findNum.val();
     findNum.val(number + 1);
@@ -13,7 +13,7 @@ $('.subNum').on('click', function() {
     }
 });
 
-$('.addAttr').click(function() {
+$('.addAttr').click( function() {
     var good = {
         name: $('#name').val(),
         price: $('#price').val(),
@@ -24,4 +24,8 @@ $('.addAttr').click(function() {
     $.post('/saveThisInfo',{good: good}, function() {
         location.href='/addAttribute/?from=addGoods';
     });
+});
+
+$('.reset').click( function () {
+    $.post('/reset');
 });
