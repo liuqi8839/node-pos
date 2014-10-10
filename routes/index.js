@@ -264,7 +264,7 @@ module.exports = function(app) {
             title: '添加属性',
             thisInfo: thisInfo,
             from : req.query.from,
-            goodName: req.query.name,
+            goodId: req.query.id,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         });
