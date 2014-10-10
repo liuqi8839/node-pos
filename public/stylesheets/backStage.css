@@ -106,6 +106,34 @@ subAttribute
 }
 
 /*
+goodsInfo
+*/
+.goodsInfo{
+    padding:30px 20px 0 20px;
+}
+.goodsInfo input{
+    width: 200px;
+}
+.goodsInfo .reset{
+    width: 82px;
+}
+.goodsInfo .number{
+    width: 111px;
+}
+.goodsInfo .number input{
+    width: 46px;
+}
+.goodsInfo .goodForm .form-group{
+    margin-bottom: 20px;
+}
+.goodsInfo .goodForm label{
+    width:auto;
+}
+.goodsInfo .goodForm .btnBar{
+    margin-bottom:30px;
+}
+
+/*
 addGoods
 */
 .addGoods{

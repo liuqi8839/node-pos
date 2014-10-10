@@ -210,14 +210,15 @@ module.exports = function(app) {
     });
 
     app.post('/addGoods', function(req,res){
-        var date = new Date();
+        var myDate = new Date();
+        var date = myDate.getFullYear() + '年' + (parseInt(myDate.getMonth()) + 1) + '月' + myDate.getDate() + '日' + myDate.toLocaleTimeString();
         var good = {
             kind : req.body.kind,
             name : req.body.name,
             price : req.body.price,
             unit : req.body.unit,
             count : req.body.count,
-            date : date.toLocaleString(),
+            date : date,
             other : []
         };
         for(var attr in req.body){

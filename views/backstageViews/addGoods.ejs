@@ -14,8 +14,10 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="col-sm-2 control-label">商品名称: &nbsp;&nbsp;</label>
-                <div class="col-sm-10">
+                <div class="col-md-2">
+                <label class="col-sm-2 control-label">商品名称:</label>
+                </div>
+                <div class="col-sm-10 col-md-10">
                     <input  name='name' id='name' type="text" class="form-control" placeholder="请输入商品名称" autofocus="true"
                             <% if(thisInfo.name != undefined) { %>
                             value="<%= thisInfo.name %>"
@@ -25,8 +27,10 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="col-sm-2 control-label">商品数量: &nbsp;&nbsp;</label>
-                <div class="btn-group col-sm-10 input-group number">
+                <div class="col-md-2">
+                <label class="col-sm-2 control-label">商品数量:</label>
+                </div>
+                <div class="btn-group col-sm-10 col-md-10 input-group number">
                     <span class="input-group-btn">
                         <a class="btn btn-default subNum" type="button" onmousemove="checkNull()">-</a>
                     </span>
@@ -45,8 +49,10 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="col-sm-2 control-label">单价(元): &nbsp;&nbsp;&nbsp;</label>
-                <div class="col-sm-10">
+                <div class="col-md-2">
+                <label class="col-sm-2 control-label">单价(元):</label>
+                </div>
+                <div class="col-sm-10 col-md-10">
                     <input name="price" id="price" type="text" class="form-control"  placeholder="请输入单价"
                             <% if(thisInfo.price != undefined) { %>
                            value="<%= thisInfo.price %>"
@@ -57,8 +63,10 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="col-sm-2 control-label">单位: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <div class="col-sm-10">
+                <div class="col-md-2">
+                <label class="col-sm-2 control-label">单位:</label>
+                </div>
+                <div class="col-sm-10 col-md-10">
                     <input name="unit" id="unit" type="text" class="form-control"  placeholder="请输入单位"
                             <% if(thisInfo.unit != undefined) { %>
                            value="<%= thisInfo.unit %>"
@@ -68,8 +76,10 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="col-sm-2 control-label">类型: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <div class="col-sm-10">
+                <div class="col-md-2">
+                <label class="col-sm-2 control-label">类型:</label>
+                </div>
+                <div class="col-sm-10 col-md-10">
                     <input name="kind" id="kind" type="text" class="form-control"  placeholder="请输入类型"
                             <% if(thisInfo.kind != undefined) { %>
                            value="<%= thisInfo.kind %>"
@@ -80,8 +90,10 @@
             </div>
             <% newAttr.forEach( function(attr) { %>
             <div class="form-group col-md-6">
-                <label class="col-sm-2 control-label"><%= attr.attrName %>: &nbsp;&nbsp;</label>
-                <div class="col-sm-10">
+                <div class="col-md-2">
+                <label class="col-sm-2 control-label"><%= attr.attrName %>:</label>
+                </div>
+                <div class="col-sm-10 col-md-10">
                     <input name="<%= attr.attrName %>" type="text" class="form-control" value="<%= attr.attrValue %>">
                 </div>
             </div>
