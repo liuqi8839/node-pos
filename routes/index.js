@@ -8,28 +8,28 @@ var _ = require('../public/underscore');
 module.exports = function(app) {
 
     app.get('/', function (req, res) {
-        if(!req.session.cart){
+        if(!req.session.cart) {
             req.session.cart = [];
         }
-        if(!req.session.total){
+        if(!req.session.total) {
             req.session.total = 0;
         }
-        if(req.query.pay == "sure"){
+        if(req.query.pay == "sure") {
             req.session.total = 0;
             req.session.cart = [];
         }
-        res.render('index',{
+        res.render('index', {
             title:"主页",
             total:req.session.total
         });
     });
 
     app.get('/item_list', function (req, res) {
-        Goods.getAll(function(err,goods){
-            if(err){
+        Goods.getAll(function(err, goods) {
+            if(err) {
                 goods = [];
             }
-            res.render('item_list',{
+            res.render('item_list', {
                 title:"商品列表",
                 total:req.session.total,
                 goods:goods
@@ -48,14 +48,14 @@ module.exports = function(app) {
     app.get('/pay', function (req, res) {
         var goods = req.session.cart;
         var promotions = [];
-        _.each(goods,function(good){
-            if(good.twosendone == "true" && good.num > 2){
+        _.each(goods, function(good) {
+            if(good.twosendone == "true" && good.num > 2) {
                 var promotion = _.clone(good);
                 promotion.num = parseInt(promotion.num / 3);
                 promotions.push(promotion);
             }
         });
-        res.render('pay',{
+        res.render('pay', {
             title:"付款",
             total:req.session.total,
             goods:goods,
@@ -63,51 +63,61 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/addGood', function(req,res){
+    app.post('/addGood', function(req, res){
         var good = req.body.good;
         var cart = req.session.cart;
-        var hadGood = _.findWhere(cart,{name:good.name});
-        if(hadGood){
+        var hadGood = _.findWhere(cart, {
+            _id: good._id
+        });
+        if(hadGood) {
             good.num = hadGood.num + 1;
-            var index = _.indexOf(cart,hadGood);
+            var index = _.indexOf(cart, hadGood);
             cart[index] = good;
         }
-        else{
+        else {
             good.num = 1;
             cart.push(good);
         }
         req.session.cart = cart;
         var total = req.session.total + 1;
         req.session.total = total;
-        res.writeHead(200,{'Content-type':'text/plain'});
+        res.writeHead(200, {
+            'Content-type':'text/plain'
+        });
         res.write(total + "");
         res.end();
     });
 
-    app.get('/subCart',function(req,res){
+    app.get('/subCart',function(req, res) {
         var goods = req.session.cart;
-        var good = _.findWhere(goods,{name:req.query.goodName});
-        var index = _.indexOf(goods,good);
+        var good = _.findWhere(goods, {
+            _id: req.query._id
+        });
+        var index = _.indexOf(goods, good);
         good.num = good.num - 1;
-        if(good.num == 0){
+        if(good.num == 0) {
             goods.splice(index,1);
-        }else{
+        }
+        else {
             goods[index] = good;
         }
         req.session.total = req.session.total - 1;
         req.session.cart = goods;
 
-        if(req.session.total == 0){
+        if(req.session.total == 0) {
             res.redirect('/item_list');
-        }else{
+        }
+        else {
             res.redirect('/cart');
         }
     });
 
-    app.get('/addCart',function(req,res){
+    app.get('/addCart',function(req, res) {
         var goods = req.session.cart;
-        var good = _.findWhere(goods,{name:req.query.goodName});
-        var index = _.indexOf(goods,good);
+        var good = _.findWhere(goods, {
+            _id: req.query._id
+        });
+        var index = _.indexOf(goods, good);
         good.num = good.num + 1;
         goods[index] = good;
         req.session.total = req.session.total + 1;
@@ -115,11 +125,10 @@ module.exports = function(app) {
         res.redirect('/cart');
     });
 
-
     /**
      * backStage
     */
-    app.get('/admin',function(req,res){
+    app.get('/admin',function(req, res) {
         req.session.newAttr = [];
         req.session.thisInfo = {};
         //判断是否是第一页，并把请求的页数转换成 number 类型
@@ -316,7 +325,7 @@ module.exports = function(app) {
         res.end();
     });
 
-    app.post('/updateCount',function(req, res) {
+    app.post('/updateCount', function(req, res) {
         var change = req.body.change;
         var count = parseInt(req.body.count);
         if(change == 'add') {
@@ -342,7 +351,7 @@ module.exports = function(app) {
         Goods.remove(req.body._id, function (err) {
             if (err) {
                 req.flash('error', err);
-                return res.redirect('back');
+                return res.redirect('/admin');
             }
             req.flash('success', '删除成功!');
         });

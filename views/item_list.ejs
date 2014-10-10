@@ -30,6 +30,7 @@
                 <tbody>
                 <% goods.forEach(function(good,index) { %>
                 <tr>
+                    <td class="hidden"><%= good._id %></td>
                     <td><%= good.kind %></td>
                     <td><%= good.name %></td>
                     <td><%= good.price %></td>

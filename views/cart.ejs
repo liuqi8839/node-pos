@@ -39,9 +39,9 @@
                     <td><%= good.unit %></td>
                     <td>
                         <div class="btn-group">
-                            <a type="button" class="btn btn-primary" href="/subCart?goodName=<%= good.name %>">-</a>
+                            <a type="button" class="btn btn-primary" href="/subCart?_id=<%= good._id %>">-</a>
                             <button class="btn btn-default"><%= good.num %></button>
-                            <a type="button" class="btn btn-primary" href="/addCart?goodName=<%= good.name %>">+</a>
+                            <a type="button" class="btn btn-primary" href="/addCart?_id=<%= good._id %>">+</a>
                         </div>
                     </td>
                     <% if(good.twosendone == "true" && good.num > 2){ %>

@@ -9,11 +9,12 @@ $('.addGood').click(function(){
         temp.push($(this).text());
     });
     var good = {
-        kind:temp[0],
-        name:temp[1],
-        price:temp[2],
-        unit:temp[3],
-        twosendone:temp[4]
+        _id: temp[0],
+        kind:temp[1],
+        name:temp[2],
+        price:temp[3],
+        unit:temp[4],
+        twosendone:temp[5]
     };
     $.post('/addGood',{good: good},function(data){
         $('#cart').find('#item-numbers').text(data);
