@@ -24,6 +24,7 @@
                     <td>
                         <form method="post">
                             <div class="btn-group input-group number">
+                                <a class="hidden _id"><%= good._id %></a>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default subNum" href="#">-</a>
                                 </span>
@@ -43,8 +44,7 @@
                 <div class="col-md-2"><td><%= good.date %></td></div>
                 <div class="col-md-2">
                     <td>
-                        <a class="hidden"><%= good._id %></a>
-                        <a href="/goodsInfo/?id=<%= good._id %>">详情</a>
+                        <a href="/goodsInfo/?_id=<%= good._id %>">详情</a>
                         <a class="delete" href="#">删除</a>
                     </td>
                 </div>

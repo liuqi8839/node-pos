@@ -1,5 +1,7 @@
 
 var mongodb = require('./db');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 
 function Goods(good){
     this.kind = good.kind;
@@ -43,7 +45,7 @@ Goods.prototype.save = function(callback){
 };
 
 //添加属性
-Goods.addAttr = function(id, other, callback) {
+Goods.addAttr = function(_id, other, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -57,7 +59,7 @@ Goods.addAttr = function(id, other, callback) {
             }
             //通过商品名称查找商品，并添加一个数组进
             collection.update({
-                _id: 'ObjectId(' + id + ')'
+                _id: ObjectId(_id)
             }, {
                 $push: {"other": other}
             } , function (err) {
@@ -72,7 +74,7 @@ Goods.addAttr = function(id, other, callback) {
 };
 
 //更新商品及其相关信息
-Goods.update = function(id, goods, callback) {
+Goods.update = function(_id, goods, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -86,7 +88,7 @@ Goods.update = function(id, goods, callback) {
             }
             //更新商品信息
             collection.update({
-                _id: 'ObjectId(' + id + ')'
+                _id: ObjectId(_id)
             }, {
                 $set: goods
             }, function (err) {
@@ -101,7 +103,7 @@ Goods.update = function(id, goods, callback) {
 };
 
 //更新商品数量
-Goods.updateCount = function(id, count, callback) {
+Goods.updateCount = function(_id, count, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -115,7 +117,7 @@ Goods.updateCount = function(id, count, callback) {
             }
             //更新商品信息
             collection.update({
-                _id: 'ObjectId(' + id + ')'
+                _id: ObjectId(_id)
             }, {
                 $set: {count: count}
             }, function (err) {
@@ -129,7 +131,7 @@ Goods.updateCount = function(id, count, callback) {
     });
 };
 
-Goods.getOne = function(id, callback) {
+Goods.getOne = function(_id, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -143,7 +145,33 @@ Goods.getOne = function(id, callback) {
             }
             //查找商品名称（name键）值为 name 一个文档
             collection.findOne({
-                _id: 'ObjectId(' + id + ')'
+                _id: ObjectId(_id)
+            }, function (err, good) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);//失败！返回 err 信息
+                }
+                callback(null, good);//成功！返回查询的商品信息
+            });
+        });
+    });
+};
+
+Goods.getName = function(name, callback) {
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);//错误，返回 err 信息
+        }
+        //读取  goods 集合
+        db.collection('goods', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);//错误，返回 err 信息
+            }
+            //查找商品名称（name键）值为 name 一个文档
+            collection.findOne({
+                name: name
             }, function (err, good) {
                 mongodb.close();
                 if (err) {
@@ -182,7 +210,7 @@ Goods.getAll = function(callback){
 };
 
 //删除一种商品
-Goods.remove = function(name, callback) {
+Goods.remove = function(_id, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -196,7 +224,7 @@ Goods.remove = function(name, callback) {
             }
             //根据商品名称查找并删除商品
             collection.remove({
-                "name": name
+                _id: ObjectId(_id)
             }, {
                 w: 1
             }, function (err) {
@@ -210,7 +238,7 @@ Goods.remove = function(name, callback) {
     });
 };
 
-Goods.deleteAttr = function(name, attrName, callback){
+Goods.deleteAttr = function(_id, attrName, callback){
     //打开数据库
     mongodb.open(function(err,db){
         if(err){
@@ -223,7 +251,7 @@ Goods.deleteAttr = function(name, attrName, callback){
                 return callback(err);
             }
             collection.update({
-                name:name
+                _id: ObjectId(_id)
             }, {
                 $pull:{
                     other:{

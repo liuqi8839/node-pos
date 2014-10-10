@@ -51,7 +51,7 @@ module.exports = function(app) {
         _.each(goods,function(good){
             if(good.twosendone == "true" && good.num > 2){
                 var promotion = _.clone(good);
-                promotion.num = parseInt(promotion.num/3);
+                promotion.num = parseInt(promotion.num / 3);
                 promotions.push(promotion);
             }
         });
@@ -148,7 +148,7 @@ module.exports = function(app) {
         if(!req.session.thisInfo) {
             req.session.thisInfo = {};
         }
-        Goods.getOne( req.query.id,  function (err, good) {
+        Goods.getOne( req.query._id,  function (err, good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
@@ -165,23 +165,22 @@ module.exports = function(app) {
     });
 
     app.post('/goodsInfo', function (req, res) {
-        var id = req.body.id;
+        var _id = req.body._id;
         var goods = {
             name: req.body.name,
             count: req.body.count,
             price: req.body.price,
             unit: req.body.unit,
             kind: req.body.kind,
-            date: req.body.date,
             other: []
         };
         for(var attr in req.body) {
-            if(attr != 'kind' && attr != 'name' && attr != 'price' && attr != 'unit' && attr != 'count') {
+            if(attr != 'kind' && attr != 'name' && attr != 'price' && attr != 'unit' && attr != 'count' && attr != '_id' && attr != 'date') {
                 goods.other.push({attrName: attr, attrValue: req.body[attr]});
             }
         }
-        Goods.update(id, goods, function (err) {
-            var url = '/goodsInfo/?id=' + id;
+        Goods.update(_id, goods, function (err) {
+            var url = '/goodsInfo/?_id=' + _id;
             if (err) {
                 req.flash('error', err);
                 return res.redirect(url);//出错！返回文章页
@@ -222,12 +221,11 @@ module.exports = function(app) {
             other : []
         };
         for(var attr in req.body){
-            if(attr != 'kind' && attr != 'name' && attr != 'price' && attr != 'unit' && attr != 'count') {
+            if(attr != 'kind' && attr != 'name' && attr != 'price' && attr != 'unit' && attr != 'count'  && attr != '_id' && attr != 'date') {
                 good.other.push({attrName: attr, attrValue: req.body[attr]});
             }
         }
         var newGood = new Goods(good);
-        console.log('====================',newGood);
         //检查商品名称是否已经存在
         Goods.getName(newGood.name, function (err,good) {
             if (err) {
@@ -264,7 +262,7 @@ module.exports = function(app) {
             title: '添加属性',
             thisInfo: thisInfo,
             from : req.query.from,
-            goodId: req.query.id,
+            _id: req.query._id,
             success: req.flash('success').toString(),
             error: req.flash('error').toString()
         });
@@ -277,7 +275,7 @@ module.exports = function(app) {
     });
 
     app.get('/subAttribute',function(req,res){
-        Goods.getOne( req.query.id,  function (err, good) {
+        Goods.getOne( req.query._id,  function (err, good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
@@ -295,10 +293,9 @@ module.exports = function(app) {
 
     app.post('/subAttribute', function (req, res) {
         var status = req.body.status;
-        var id = req.body.id;
         var attrName = req.body.attrName;
         if(status == 'has'){
-            Goods.deleteAttr(id, attrName, function (err) {
+            Goods.deleteAttr( req.body._id, attrName, function (err) {
                 if (err) {
                     req.flash('error', err);
                     return res.redirect('back');
@@ -321,7 +318,6 @@ module.exports = function(app) {
 
     app.post('/updateCount',function(req, res) {
         var change = req.body.change;
-        var name = req.body.name;
         var count = parseInt(req.body.count);
         if(change == 'add') {
             count = count + 1;
@@ -329,7 +325,7 @@ module.exports = function(app) {
         if(change == 'sub') {
             count = count - 1;
         }
-        Goods.updateCount(name, count, function (err) {
+        Goods.updateCount(req.body._id, count, function (err) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/admin');//添加失败失败返回添加商品页
@@ -343,8 +339,7 @@ module.exports = function(app) {
     });
 
     app.post('/deleteGoods', function (req, res) {
-        var name = req.body.name;
-        Goods.remove(name, function (err) {
+        Goods.remove(req.body._id, function (err) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
@@ -354,8 +349,6 @@ module.exports = function(app) {
         res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });
-
-
 
     app.post('/saveThisInfo', function(req, res) {
         req.session.thisInfo = req.body.good;

@@ -7,8 +7,8 @@
     <a id="from" href="/addGoods">添加商品</a>
     <% } %>
     <% if(from == 'goodsInfo') { %>
-    <a id="from" class="hidden"><%= goodId %></a>
-    <a id="from" href="/goodsInfo/?id=<%= goodId %>">商品详情</a>
+    <a id="from" class="hidden"><%= _id %></a>
+    <a id="from" href="/goodsInfo/?_id=<%= _id %>">商品详情</a>
     <% } %>
     >>
     <label>添加属性</label>
@@ -37,7 +37,7 @@
                     <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/addGoods">取消</a></div>
                     <% }%>
                     <% if(from == 'goodsInfo') { %>
-                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/goodsInfo/?id=<%= goodId %>">取消</a></div>
+                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-info button" href="/goodsInfo/?_id=<%= _id %>">取消</a></div>
                     <% } %>
                 </div>
             </div>

@@ -15,12 +15,12 @@ $('.save').click(function() {
         return;
     }
     alert("保存成功");
-    $.post('/addAttribute',{attrName: attrName, attrValue: attrValue, from: from}, function() {
+    $.post('/addAttribute', {attrName: attrName, attrValue: attrValue}, function() {
         if(from == '添加商品') {
             location.href='/addGoods';
         }
         else{
-            location.href='/goodsInfo/?id='+from;
+            location.href='/goodsInfo/?_id=' + from;
         }
     });
 });
