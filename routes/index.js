@@ -255,7 +255,7 @@ module.exports = function(app) {
 
     app.get('/addAttribute',function(req,res){
         if(req.query.from == 'addGoods'){
-            var thisInfo = req.session.thisInfo
+            var thisInfo = req.session.thisInfo;
         }
         else{
             thisInfo = {};
@@ -277,7 +277,7 @@ module.exports = function(app) {
     });
 
     app.get('/subAttribute',function(req,res){
-        Goods.getName( req.query.name,  function (err, good) {
+        Goods.getOne( req.query.id,  function (err, good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
@@ -291,6 +291,32 @@ module.exports = function(app) {
                 error: req.flash('error').toString()
             });
         });
+    });
+
+    app.post('/subAttribute', function (req, res) {
+        var status = req.body.status;
+        var id = req.body.id;
+        var attrName = req.body.attrName;
+        if(status == 'has'){
+            Goods.deleteAttr(id, attrName, function (err) {
+                if (err) {
+                    req.flash('error', err);
+                    return res.redirect('back');
+                }
+                req.flash('success', '删除成功!');
+            });
+        }
+        if(status == 'new') {
+            var newAttr = req.session.newAttr;
+            for(var i = 0; i < newAttr.length; i++) {
+                if(newAttr[i].attrName == attrName) {
+                    newAttr.splice(i,1);
+                }
+            }
+            req.session.newAttr = newAttr;
+        }
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.end();
     });
 
     app.post('/updateCount',function(req, res) {
@@ -329,31 +355,7 @@ module.exports = function(app) {
         res.end();
     });
 
-    app.post('/deleteAttr', function (req, res) {
-        var status = req.body.status;
-        var name = req.body.name;
-        var attrName = req.body.attrName;
-        if(status == 'has'){
-            Goods.deleteAttr(name, attrName, function (err) {
-                if (err) {
-                    req.flash('error', err);
-                    return res.redirect('back');
-                }
-                req.flash('success', '删除成功!');
-            });
-        }
-        if(status == 'new') {
-            var newAttr = req.session.newAttr;
-            for(var i = 0; i < newAttr.length; i++) {
-                if(newAttr[i].attrName == attrName) {
-                    newAttr.splice(i,1);
-                }
-            }
-            req.session.newAttr = newAttr;
-        }
-        res.writeHead(200,{'Content-type':'text/plain'});
-        res.end();
-    });
+
 
     app.post('/saveThisInfo', function(req, res) {
         req.session.thisInfo = req.body.good;

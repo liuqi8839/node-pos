@@ -8,12 +8,12 @@
             <div class="btnBar">
                 <div class="row">
                     <div class="col-xs-3 col-md-3"><button type="submit" class="btn btn-primary">保存属性</button></div>
-                    <div class="col-xs-3 col-md-3"><a  class="btn btn-primary addAttr" href="/addAttribute/?from=goodsInfo&id=<%= good.id%>">添加属性</a></div>
-                    <div class="col-xs-3 col-md-3"><a  class="btn btn-primary" href="/subAttribute/?from=goodsInfo&id=<%= good.id%>">删除属性</a></div>
-                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-primary reset" href="/goodsInfo/?id=<%= good.id%>" >取消</a></div>
+                    <div class="col-xs-3 col-md-3"><a  class="btn btn-primary addAttr" href="/addAttribute/?from=goodsInfo&id=<%= good._id%>">添加属性</a></div>
+                    <div class="col-xs-3 col-md-3"><a  class="btn btn-primary" href="/subAttribute/?from=goodsInfo&id=<%= good._id%>">删除属性</a></div>
+                    <div class="col-xs-3 col-md-3"><a type="button" class="btn btn-primary reset" href="/goodsInfo/?id=<%= good._id%>" >取消</a></div>
                 </div>
             </div>
-            <input name="id" id="id" class="hidden" value="<%= good.id%>">
+            <input name="id" id="id" class="hidden" value="<%= good._id%>">
             <div class="form-group col-md-6">
                 <div class="col-md-2">
                     <label class="col-sm-2 control-label">商品名称:</label>

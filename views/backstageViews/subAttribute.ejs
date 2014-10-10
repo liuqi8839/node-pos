@@ -7,7 +7,8 @@
         <a href="/addGoods">添加商品</a>
         <% } %>
         <% if(from == 'goodsInfo') { %>
-        <a href="/goodsInfo/?name=<%=  good.name %>"><%=  good.name %></a>
+        <a class="hidden"><%=  good._id %></a>
+        <a href="/goodsInfo/?id=<%=  good._id %>">商品详情</a>
         <% } %>
         >>
         <label>删除属性</label>

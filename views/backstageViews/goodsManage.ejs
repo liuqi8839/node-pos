@@ -43,7 +43,8 @@
                 <div class="col-md-2"><td><%= good.date %></td></div>
                 <div class="col-md-2">
                     <td>
-                        <a href="/goodsInfo/?name=<%= good.name %>">详情</a>
+                        <a class="hidden"><%= good._id %></a>
+                        <a href="/goodsInfo/?id=<%= good._id %>">详情</a>
                         <a class="delete" href="#">删除</a>
                     </td>
                 </div>

@@ -65,9 +65,8 @@ function isPhone(attrValue) {
  */
 var updateCount = function(THIS){
     var count = +THIS.val();
-    var name = THIS.closest('tr').children().first().next().text();
-    $.post('/updateCount',{change: 'update', name: name, count: count},function(data){
+    var id = THIS.closest('tr').children().first().next().text();
+    $.post('/updateCount',{change: 'update', id: id, count: count},function(data){
         THIS.val(data);
     });
 };
-
