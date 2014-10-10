@@ -8,6 +8,7 @@ function Goods(good){
     this.unit = good.unit;
     this.count = good.count;
     this.other = good.other;
+    this.date = good.date;
 }
 
 module.exports = Goods;
@@ -15,14 +16,7 @@ module.exports = Goods;
 //存入商品信息
 Goods.prototype.save = function(callback){
     //要存入数据库的商品
-    var good = {
-        kind:this.kind,
-        name:this.name,
-        price:this.price,
-        unit:this.unit,
-        count:this.count,
-        other: this.other
-    };
+    var good = this;
     //打开数据库
     mongodb.open(function(err,db){
         if(err){

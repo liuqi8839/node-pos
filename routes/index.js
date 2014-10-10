@@ -172,6 +172,7 @@ module.exports = function(app) {
             price: req.body.price,
             unit: req.body.unit,
             kind: req.body.kind,
+            date: req.body.date,
             other: []
         };
         for(var attr in req.body) {
@@ -209,12 +210,14 @@ module.exports = function(app) {
     });
 
     app.post('/addGoods', function(req,res){
+        var date = new Date();
         var good = {
             kind : req.body.kind,
             name : req.body.name,
             price : req.body.price,
             unit : req.body.unit,
             count : req.body.count,
+            date : date.toLocaleString(),
             other : []
         };
         for(var attr in req.body){
@@ -223,26 +226,29 @@ module.exports = function(app) {
             }
         }
         var newGood = new Goods(good);
+        console.log('====================',newGood);
         //检查商品名称是否已经存在
         Goods.getName(newGood.name, function (err,good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/addGoods');//添加失败失败返回添加商品页
             }
+            if(good == null) {
+                return newGood.save(function (err) {
+                    if (err) {
+                        req.flash('error', err);
+                        return res.redirect('/addGoods');//添加失败失败返回添加商品页
+                    }
+                    req.session.thisInfo = {};
+                    req.session.newAttr = [];
+                    req.flash('success', '添加成功!');
+                    res.redirect('/admin');//添加成功后返回商品管理页
+                });
+            }
             if(good.name == newGood.name) {
                 req.flash('success', '商品重复!');
                  return res.redirect('/addGoods');//添加成功后返回商品管理页
             }
-            newGood.save(function (err) {
-                if (err) {
-                    req.flash('error', err);
-                    return res.redirect('/addGoods');//添加失败失败返回添加商品页
-                }
-                req.session.thisInfo = {};
-                req.session.newAttr = [];
-                req.flash('success', '添加成功!');
-                res.redirect('/admin');//添加成功后返回商品管理页
-            });
         });
     });
 
@@ -264,7 +270,7 @@ module.exports = function(app) {
     });
 
     app.post('/addAttribute',function(req,res){
-        req.session.newAttr.push({attrName: req.body.attrName, attrValue: req.body.attrValue});
+        req.session.newAttr.unshift({attrName: req.body.attrName, attrValue: req.body.attrValue});
         res.writeHead(200,{'Content-type':'text/plain'});
         res.end();
     });
