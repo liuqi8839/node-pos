@@ -43,7 +43,7 @@ Goods.prototype.save = function(callback){
 };
 
 //添加属性
-Goods.addAttr = function(name, other, callback) {
+Goods.addAttr = function(id, other, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -57,7 +57,7 @@ Goods.addAttr = function(name, other, callback) {
             }
             //通过商品名称查找商品，并添加一个数组进
             collection.update({
-                "name": name
+                _id: 'ObjectId(' + id + ')'
             }, {
                 $push: {"other": other}
             } , function (err) {
@@ -72,7 +72,7 @@ Goods.addAttr = function(name, other, callback) {
 };
 
 //更新商品及其相关信息
-Goods.update = function(name, goods, callback) {
+Goods.update = function(id, goods, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -86,7 +86,7 @@ Goods.update = function(name, goods, callback) {
             }
             //更新商品信息
             collection.update({
-                "name": name
+                _id: 'ObjectId(' + id + ')'
             }, {
                 $set: goods
             }, function (err) {
@@ -101,7 +101,7 @@ Goods.update = function(name, goods, callback) {
 };
 
 //更新商品数量
-Goods.updateCount = function(name, count, callback) {
+Goods.updateCount = function(id, count, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -115,7 +115,7 @@ Goods.updateCount = function(name, count, callback) {
             }
             //更新商品信息
             collection.update({
-                "name": name
+                _id: 'ObjectId(' + id + ')'
             }, {
                 $set: {count: count}
             }, function (err) {
@@ -129,7 +129,7 @@ Goods.updateCount = function(name, count, callback) {
     });
 };
 
-Goods.getName = function(name, callback) {
+Goods.getOne = function(id, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -143,7 +143,7 @@ Goods.getName = function(name, callback) {
             }
             //查找商品名称（name键）值为 name 一个文档
             collection.findOne({
-                name: name
+                _id: 'ObjectId(' + id + ')'
             }, function (err, good) {
                 mongodb.close();
                 if (err) {

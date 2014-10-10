@@ -148,7 +148,7 @@ module.exports = function(app) {
         if(!req.session.thisInfo) {
             req.session.thisInfo = {};
         }
-        Goods.getName( req.query.name,  function (err, good) {
+        Goods.getOne( req.query.id,  function (err, good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
