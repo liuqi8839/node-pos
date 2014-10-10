@@ -20,7 +20,7 @@ $('.save').click(function() {
             location.href='/addGoods';
         }
         else{
-            location.href='/goodsInfo/?name='+from;
+            location.href='/goodsInfo/?id='+from;
         }
     });
 });
