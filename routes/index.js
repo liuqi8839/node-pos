@@ -165,9 +165,9 @@ module.exports = function(app) {
     });
 
     app.post('/goodsInfo', function (req, res) {
-        var name = req.body.name;
+        var id = req.body.id;
         var goods = {
-            name: name,
+            name: req.body.name,
             count: req.body.count,
             price: req.body.price,
             unit: req.body.unit,
@@ -180,8 +180,8 @@ module.exports = function(app) {
                 goods.other.push({attrName: attr, attrValue: req.body[attr]});
             }
         }
-        Goods.update(name, goods, function (err) {
-            var url = '/goodsInfo/?name=' + name;
+        Goods.update(id, goods, function (err) {
+            var url = '/goodsInfo/?id=' + id;
             if (err) {
                 req.flash('error', err);
                 return res.redirect(url);//出错！返回文章页
