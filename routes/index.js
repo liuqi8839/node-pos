@@ -369,4 +369,24 @@ module.exports = function(app) {
         req.session.newAttr = [];
         res.end();
     });
+
+
+    /**
+     * discounts
+     */
+    app.get('/allDiscounts', function(req, res) {
+        res.render('backstageViews/allDiscounts', {
+            title: '打折活动',
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
+    });
+
+    app.get('/addRule', function(req, res) {
+        res.render('backstageViews/addRule', {
+            title: '添加规则',
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        })
+    });
 };

@@ -63,9 +63,8 @@ function isPhone(attrValue) {
 /**
  * use by goodManage
  */
-var updateCount = function(THIS){
-    var count = +THIS.val();
-    var _id = THIS.closest('tr').children().first().next().text();
+var updateCount = function(count, _id){
+    var THIS = $(this);
     $.post('/updateCount',{change: 'update', _id: _id, count: count},function(data){
         THIS.val(data);
     });
