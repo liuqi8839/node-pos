@@ -236,7 +236,7 @@ module.exports = function(app) {
         }
         var newGood = new Goods(good);
         //检查商品名称是否已经存在
-        Goods.getByAttr({name: newGood.name}, function (err,goods) {
+        Goods.get({name: newGood.name}, function (err,goods) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/addGoods');//添加失败失败返回添加商品页

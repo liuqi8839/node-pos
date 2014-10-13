@@ -137,8 +137,8 @@ Goods.getById = function(_id, callback) {
     });
 };
 
-
-Goods.getByAttr = function(attrs, callback) {
+//如果有条件，根据条件查找商品，如果没有，读取所有商品
+Goods.get = function(attrs, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -151,7 +151,11 @@ Goods.getByAttr = function(attrs, callback) {
                 return callback(err);
             }
             //根据 query 对象查询文章
-            collection.find(attrs).sort({
+            var query = {};
+            if(attrs) {
+                query = attrs;
+            }
+            collection.find(query).sort({
                 time: -1
             }).toArray(function (err, goods) {
                 mongodb.close();
@@ -159,32 +163,6 @@ Goods.getByAttr = function(attrs, callback) {
                     return callback(err);//失败！返回 err
                 }
                 callback(null, goods);//成功！以数组形式返回查询的结果
-            });
-        });
-    });
-};
-
-//读取所有商品及其相关信息
-Goods.getAll = function(callback){
-    //打开数据库
-    mongodb.open(function(err,db){
-        if(err){
-            return callback(err);
-        }
-        //读取goods集合
-        db.collection('goods',function(err,collection){
-            if(err){
-                mongodb.close();
-                return callback(err);
-            }
-            collection.find({}).sort({
-                time:-1
-            }).toArray(function(err,goods){
-                mongodb.close();
-                if(err){
-                    return callback(err);
-                }
-                callback(null,goods);
             });
         });
     });
