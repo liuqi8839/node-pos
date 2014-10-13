@@ -334,7 +334,7 @@ module.exports = function(app) {
         if(change == 'sub') {
             count = count - 1;
         }
-        Goods.updateCount(req.body._id, count, function (err) {
+        Goods.update(req.body._id,{count: count}, function (err) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/admin');//添加失败失败返回添加商品页

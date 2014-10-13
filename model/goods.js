@@ -44,34 +44,43 @@ Goods.prototype.save = function(callback){
     });
 };
 
-//添加属性
-Goods.addAttr = function(_id, other, callback) {
+
+Goods.getFive = function(page,callback){
     //打开数据库
-    mongodb.open(function (err, db) {
-        if (err) {
+    mongodb.open(function(err,db){
+        if(err){
             return callback(err);
         }
-        //读取 goods 集合
-        db.collection('goods', function (err, collection) {
-            if (err) {
+        //读取goods集合
+        db.collection('goods',function(err,collection){
+            if(err){
                 mongodb.close();
                 return callback(err);
             }
-            //通过商品名称查找商品，并添加一个数组进
-            collection.update({
-                _id: ObjectId(_id)
-            }, {
-                $push: {"other": other}
-            } , function (err) {
-                mongodb.close();
-                if (err) {
+            //使用count返回特定查询的商品数total
+            collection.count(function(err,total){
+                if(err){
+                    mongodb.close();
                     return callback(err);
                 }
-                callback(null);
+                //根据对象查询,并跳过(page-1)*10个结果,返回之后的10个结果
+                collection.find({},{
+                    skip: (page - 1)*5,
+                    limit: 5
+                }).sort({
+                    time: -1
+                }).toArray(function(err,goods){
+                    mongodb.close();
+                    if(err){
+                        return callback(err);
+                    }
+                    callback(null,goods,total);
+                })
             });
         });
     });
 };
+
 
 //更新商品及其相关信息
 Goods.update = function(_id, goods, callback) {
@@ -91,35 +100,6 @@ Goods.update = function(_id, goods, callback) {
                 _id: ObjectId(_id)
             }, {
                 $set: goods
-            }, function (err) {
-                mongodb.close();
-                if (err) {
-                    return callback(err);
-                }
-                callback(null);
-            });
-        });
-    });
-};
-
-//更新商品数量
-Goods.updateCount = function(_id, count, callback) {
-    //打开数据库
-    mongodb.open(function (err, db) {
-        if (err) {
-            return callback(err);
-        }
-        //读取 goods 集合
-        db.collection('goods', function (err, collection) {
-            if (err) {
-                mongodb.close();
-                return callback(err);
-            }
-            //更新商品信息
-            collection.update({
-                _id: ObjectId(_id)
-            }, {
-                $set: {count: count}
             }, function (err) {
                 mongodb.close();
                 if (err) {
@@ -152,6 +132,33 @@ Goods.getById = function(_id, callback) {
                     return callback(err);//失败！返回 err 信息
                 }
                 callback(null, good);//成功！返回查询的商品信息
+            });
+        });
+    });
+};
+
+
+Goods.getByAttr = function(attrs, callback) {
+    //打开数据库
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 goods 集合
+        db.collection('goods', function(err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            //根据 query 对象查询文章
+            collection.find(attrs).sort({
+                time: -1
+            }).toArray(function (err, goods) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);//失败！返回 err
+                }
+                callback(null, goods);//成功！以数组形式返回查询的结果
             });
         });
     });
@@ -243,64 +250,3 @@ Goods.deleteAttr = function(_id, attrName, callback){
     });
 };
 
-Goods.getFive = function(page,callback){
-    //打开数据库
-    mongodb.open(function(err,db){
-        if(err){
-            return callback(err);
-        }
-        //读取goods集合
-        db.collection('goods',function(err,collection){
-            if(err){
-                mongodb.close();
-                return callback(err);
-            }
-            //使用count返回特定查询的商品数total
-            collection.count(function(err,total){
-                if(err){
-                    mongodb.close();
-                    return callback(err);
-                }
-                //根据对象查询,并跳过(page-1)*10个结果,返回之后的10个结果
-                collection.find({},{
-                    skip: (page - 1)*5,
-                    limit: 5
-                }).sort({
-                    time: -1
-                }).toArray(function(err,goods){
-                    mongodb.close();
-                    if(err){
-                        return callback(err);
-                    }
-                    callback(null,goods,total);
-                })
-            });
-        });
-    });
-};
-
-Goods.getByAttr = function(attrs, callback) {
-    //打开数据库
-    mongodb.open(function (err, db) {
-        if (err) {
-            return callback(err);
-        }
-        //读取 goods 集合
-        db.collection('goods', function(err, collection) {
-            if (err) {
-                mongodb.close();
-                return callback(err);
-            }
-            //根据 query 对象查询文章
-            collection.find(attrs).sort({
-                time: -1
-            }).toArray(function (err, goods) {
-                mongodb.close();
-                if (err) {
-                    return callback(err);//失败！返回 err
-                }
-                callback(null, goods);//成功！以数组形式返回查询的结果
-            });
-        });
-    });
-};
