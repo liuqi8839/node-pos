@@ -157,7 +157,7 @@ module.exports = function(app) {
         if(!req.session.thisInfo) {
             req.session.thisInfo = {};
         }
-        Goods.getOne( req.query._id,  function (err, good) {
+        Goods.getById( req.query._id,  function (err, good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
@@ -236,12 +236,12 @@ module.exports = function(app) {
         }
         var newGood = new Goods(good);
         //检查商品名称是否已经存在
-        Goods.getName(newGood.name, function (err,good) {
+        Goods.getByAttr({name: newGood.name}, function (err,goods) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('/addGoods');//添加失败失败返回添加商品页
             }
-            if(good == null) {
+            if(goods == '') {
                 return newGood.save(function (err) {
                     if (err) {
                         req.flash('error', err);
@@ -253,7 +253,7 @@ module.exports = function(app) {
                     res.redirect('/admin');//添加成功后返回商品管理页
                 });
             }
-            if(good.name == newGood.name) {
+            else {
                 req.flash('success', '商品重复!');
                  return res.redirect('/addGoods');//添加成功后返回商品管理页
             }
@@ -284,7 +284,7 @@ module.exports = function(app) {
     });
 
     app.get('/subAttribute',function(req,res){
-        Goods.getOne( req.query._id,  function (err, good) {
+        Goods.getById( req.query._id,  function (err, good) {
             if (err) {
                 req.flash('error', err);
                 return res.redirect('back');
