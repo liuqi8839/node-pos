@@ -389,4 +389,18 @@ module.exports = function(app) {
             error: req.flash('error').toString()
         })
     });
+
+    /**
+     * text
+     */
+
+    app.get('/text', function(req, res) {
+
+        res.render('text/text', {
+            goods: goods,
+            title: '过滤',
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        })
+    });
 };
