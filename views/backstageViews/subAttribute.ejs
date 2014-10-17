@@ -1,14 +1,14 @@
 <%- include header %>
 <div class="col-xs-12 col-md-12 subAttribute">
     <div>
-        <a  href="/admin">商品信息管理页</a>
+        <a href="/admin">商品信息管理页</a>
         >>
         <% if(from == 'addGoods') { %>
         <a href="/addGoods">添加商品</a>
         <% } %>
         <% if(from == 'goodsInfo') { %>
-        <a class="hidden"><%=  good._id %></a>
-        <a href="/goodsInfo/?_id=<%=  good._id %>">商品详情</a>
+        <a class="hidden"><%= good._id %></a>
+        <a href="/goodsInfo/?_id=<%= good._id %>">商品详情</a>
         <% } %>
         >>
         <label>删除属性</label>
@@ -23,20 +23,28 @@
         <% if(attributes == 'other') { %>
         <% good[attributes].forEach( function(attr) { %>
         <tr class="otherAttr">
-            <div class="col-md-4"><td><%= attr.attrName %></td></div>
-            <div class="col-md-4"><td><%= attr.attrValue %></td></div>
+            <div class="col-md-4">
+                <td><%= attr.attrName %></td>
+            </div>
+            <div class="col-md-4">
+                <td><%= attr.attrValue %></td>
+            </div>
             <div class="col-md-4">
                 <td>
                     <a class="deleteHas" href="#">删除</a>
                 </td>
             </div>
-        <% }) %>
-        <% }} %>
+            <% }) %>
+            <% }} %>
         </tr>
         <% newAttr.forEach( function(attr) { %>
         <tr class="otherAttr">
-            <div class="col-md-4"><td><%= attr.attrName %></td></div>
-            <div class="col-md-4"><td><%= attr.attrValue %></td></div>
+            <div class="col-md-4">
+                <td><%= attr.attrName %></td>
+            </div>
+            <div class="col-md-4">
+                <td><%= attr.attrValue %></td>
+            </div>
             <div class="col-md-4">
                 <td>
                     <a class="deleteNew" href="#">删除</a>

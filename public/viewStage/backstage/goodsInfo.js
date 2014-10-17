@@ -1,19 +1,18 @@
-
-$('.addNum').click( function() {
+$('.addNum').click(function () {
     var findNum = $('.number').find('input');
     var number = +findNum.val();
     findNum.val(number + 1);
 });
 
-$('.subNum').on('click', function() {
+$('.subNum').on('click', function () {
     var findNum = $('.number').find('input');
     var number = +findNum.val();
-    if(number != 0){
+    if (number != 0) {
         findNum.val(number - 1);
     }
 });
 
-$('.addAttr').click( function() {
+$('.addAttr').click(function () {
     var good = {
         name: $('#name').val(),
         price: $('#price').val(),
@@ -21,9 +20,9 @@ $('.addAttr').click( function() {
         unit: $('#unit').val(),
         kind: $('#kind').val()
     };
-    $.post('/saveThisInfo',{good: good});
+    $.post('/saveThisInfo', {good: good});
 });
 
-$('.reset').click( function () {
+$('.reset').click(function () {
     $.post('/reset');
 });

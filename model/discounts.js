@@ -2,7 +2,7 @@ var mongodb = require('./db');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Discounts(discount){
+function Discounts(discount) {
     this._id = discount._id;
     this.startDay = discount.startDay;
     this.endDay = discount.endDay;
@@ -12,7 +12,7 @@ function Discounts(discount){
 
 module.exports = Discounts;
 
-Discounts.prototype.save = function() {
+Discounts.prototype.save = function () {
 
     var _id = this._id;
     var discount = {

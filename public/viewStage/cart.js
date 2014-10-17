@@ -1,4 +1,3 @@
-
-$(function(){
+$(function () {
     $('#cart').addClass('active');
 });

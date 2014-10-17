@@ -2,7 +2,7 @@
 
 <div class="container theme-showcase" role="main">
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="panel panel-default col-sm-12 theme-showcase" role="main" >
+    <div class="panel panel-default col-sm-12 theme-showcase" role="main">
         <div class="panel-heading">
             <h3 class="panel-title text_left">购物清单</h3>
         </div>
@@ -31,7 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% var count = 0,subtotal = 0;goods.forEach(function(good,index) { %>
+                <% var count = 0, subtotal = 0;goods.forEach(function(good, index) { %>
                 <tr>
                     <td><%= good.kind %></td>
                     <td><%= good.name %></td>
@@ -45,7 +45,9 @@
                         </div>
                     </td>
                     <% if(good.twosendone == "true" && good.num > 2){ %>
-                    <td><%= subtotal = (good.num % 3 + parseInt(good.num / 3) * 2) * good.price %>元(原价：<%= good.num * good.price %>元)</td>
+                    <td><%= subtotal = (good.num % 3 + parseInt(good.num / 3) * 2) * good.price %>
+                        元(原价：<%= good.num * good.price %>元)
+                    </td>
                     <% } else { %>
                     <td><%= subtotal = good.num * good.price %>元</td>
                     <% } %>
@@ -54,6 +56,7 @@
                 </tbody>
             </table>
             <p align="right">总计：<%= count %>元</p>
+
             <p align="right"><a href="/pay" class="btn btn-primary btn-lg" role="button">付款</a></p>
         </div>
     </div>

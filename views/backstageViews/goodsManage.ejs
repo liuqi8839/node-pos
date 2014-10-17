@@ -2,8 +2,11 @@
 
 <div class="col-xs-12 col-md-12 addGoods">
     <p>商品信息管理</p>
+
     <p></p>
+
     <p><a type="button" class="btn btn-primary" href="/addGoods">添加商品</a></p>
+
     <form method="post">
         <table class="table table-hover table-responsive">
             <tr>
@@ -18,8 +21,12 @@
             <% var count = 0 %>
             <% goods.forEach( function (good, index) { %>
             <tr>
-                <div class="col-md-1"><td><%= ++count %></td></div>
-                <div class="col-md-2"><td><%= good.name %></td></div>
+                <div class="col-md-1">
+                    <td><%= ++count %></td>
+                </div>
+                <div class="col-md-2">
+                    <td><%= good.name %></td>
+                </div>
                 <div class="col-md-2" id='goodsNum'>
                     <td>
                         <form method="post">
@@ -34,7 +41,7 @@
                                                if($(this).val()==''){ $(this).val(<%= good.count %>); }
                                                updateCount($(this).val(), $(this).prev().prev().text());
                                                "
-                                       >
+                                        >
                                 <span class="input-group-btn">
                                     <a class="btn btn-default addNum" href="#">+</a>
                                 </span>
@@ -42,16 +49,22 @@
                         </form>
                     </td>
                 </div>
-                <div class="col-md-2"><td><%= good.price %></td></div>
-                <div class="col-md-1"><td><%= good.unit %></td></div>
-                <div class="col-md-2"><td><%= good.date %></td></div>
+                <div class="col-md-2">
+                    <td><%= good.price %></td>
+                </div>
+                <div class="col-md-1">
+                    <td><%= good.unit %></td>
+                </div>
+                <div class="col-md-2">
+                    <td><%= good.date %></td>
+                </div>
                 <div class="col-md-2">
                     <td>
                         <a href="/goodsInfo/?_id=<%= good._id %>">详情</a>
                         <a class="delete" href="#">删除</a>
                     </td>
                 </div>
-            <% }) %>
+                <% }) %>
             </tr>
         </table>
     </form>

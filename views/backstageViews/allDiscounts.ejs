@@ -2,7 +2,7 @@
 
 <div class="col-xs-12 col-md-12 allDiscounts">
     <div>
-        <a class="btn btn-primary" href="/addRule" >保存商品</a>
+        <a class="btn btn-primary" href="/addRule">保存商品</a>
     </div>
     <table class="table table-hover table-responsive">
         <tr>
@@ -14,10 +14,18 @@
         </tr>
         <% allDiscounts.forEach( function(oneDiscount) { %>
         <tr class="otherAttr">
-            <div class="col-md-4"><td><%= oneDiscount.name %></td></div>
-            <div class="col-md-4"><td><%= oneDiscount.price %></td></div>
-            <div class="col-md-4"><td><%= oneDiscount.date %></td></div>
-            <div class="col-md-4"><td>买 <%= oneDiscount.buy %> 赠 <%= oneDiscount.give %></td></div>
+            <div class="col-md-4">
+                <td><%= oneDiscount.name %></td>
+            </div>
+            <div class="col-md-4">
+                <td><%= oneDiscount.price %></td>
+            </div>
+            <div class="col-md-4">
+                <td><%= oneDiscount.date %></td>
+            </div>
+            <div class="col-md-4">
+                <td>买 <%= oneDiscount.buy %> 赠 <%= oneDiscount.give %></td>
+            </div>
             <div class="col-md-4">
                 <td>
                     <a class="deleteDiscount" href="#">删除</a>
